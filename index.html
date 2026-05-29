@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Besucher-Analytik – joseflee.co.kr</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #273449;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --green: #10b981;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --purple: #8b5cf6;
+      --orange: #f97316;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .site-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .header h1 span {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .demo-badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--yellow);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .demo-badge.live {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      color: #fff;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .range-tabs {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      gap: 2px;
+    }
+
+    .range-tab {
+      padding: 6px 14px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .range-tab:hover { color: var(--text); }
+
+    .range-tab.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .stat-card.blue::before  { background: var(--accent); }
+    .stat-card.green::before { background: var(--green); }
+    .stat-card.purple::before { background: var(--purple); }
+    .stat-card.orange::before { background: var(--orange); }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-card.blue  .stat-value { color: var(--accent-hover)… }
+    .stat-change {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-change.up   { color: var(--green); }
+    .stat-change.down { color: var(--red); }
+    .stat-change.neutral { color: var(--text-muted); }
+
+    /* ── CHARTS ROW ── */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 260px;
+    }
+
+    /* ── TWO-COLUMN ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── TABLES ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 0 12px;
+    }
+
+    .data-table th:last-child,
+    .data-table td:last-child { text-align: right; }
+
+    .data-table td {
+      padding: 10px 0;
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    .page-path {
+      color: var(--accent-light, #60a5fa);
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .bar-inline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--accent);
+    }
+
+    .flag {
+      font-size: 16px;
+      margin-right: 6px;
+    }
+
+    /* ── SETUP BANNER ── */
+    .setup-banner {
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .setup-banner-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .setup-banner h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .setup-banner p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .setup-steps {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .setup-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .step-num {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      width: 480px;
+      max-width: calc(100vw - 32px);
+      transform: translateY(12px);
+      transition: transform 0.2s;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    .form-help {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .provider-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .provider-tab {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .provider-tab.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(59,130,246,0.1);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── LOADING ── */
+    .loading-spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .skeleton {
+      background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* ── REALTIME DOT ── */
+    .realtime {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-left">
+    <div class="site-icon">📊</div>
+    <h1>joseflee.co.kr <span>/ Analytik</span></h1>
+    <span class="demo-badge" id="modeBadge">Demo</span>
+  </div>
+  <div class="header-right">
+    <div class="realtime">
+      <div class="dot"></div>
+      <span id="realtimeCount">–</span> aktive Besucher
+    </div>
+    <button class="btn" onclick="openModal()">⚙ Konfigurieren</button>
+    <button class="btn" id="refreshBtn" onclick="loadData()">↻ Aktualisieren</button>
+  </div>
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+  <!-- Setup Banner (shown when in demo mode) -->
+  <div class="setup-banner" id="setupBanner">
+    <div class="setup-banner-icon">💡</div>
+    <div>
+      <h3>Demo-Modus aktiv – Echte Daten einrichten</h3>
+      <p>Diese Seite zeigt Beispieldaten. Um echte Besucherzahlen von <strong>joseflee.co.kr</strong> anzuzeigen, folge diesen Schritten:</p>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <span>Registriere ein kostenloses Konto bei <strong>GoatCounter</strong> (<a href="https://goatcounter.com" target="_blank" style="color:var(--accent)">goatcounter.com</a>) für joseflee.co.kr</span>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <span>Füge das Tracking-Skript zu joseflee.co.kr hinzu: <code style="color:var(--accent);font-size:11px">&lt;script data-goatcounter="https://DEIN-SITE.goatcounter.com/count" async src="//gc.zgo.at/count.js"&gt;&lt;/script&gt;</code></span>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <span>Klicke auf <strong>Konfigurieren</strong> (oben rechts) und gib deine GoatCounter-URL und deinen API-Token ein</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="range-tabs">
+      <button class="range-tab" data-range="1">Heute</button>
+      <button class="range-tab" data-range="7">7 Tage</button>
+      <button class="range-tab active" data-range="30">30 Tage</button>
+      <button class="range-tab" data-range="90">90 Tage</button>
+      <button class="range-tab" data-range="365">1 Jahr</button>
+    </div>
+    <div class="toolbar-right">
+      <span class="last-updated" id="lastUpdated">–</span>
+    </div>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-label">Besucher (gesamt)</div>
+      <div class="stat-value" id="totalVisits">–</div>
+      <div class="stat-change" id="totalChange">–</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Einmalige Besucher</div>
+      <div class="stat-value" id="uniqueVisits">–</div>
+      <div class="stat-change" id="uniqueChange">–</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-label">Seitenaufrufe</div>
+      <div class="stat-value" id="pageviews">–</div>
+      <div class="stat-change" id="pageviewChange">–</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-label">Ø Seitenaufrufe/Besuch</div>
+      <div class="stat-value" id="pagesPerVisit">–</div>
+      <div class="stat-change" id="pagesChange">–</div>
+    </div>
+  </div>
+
+  <!-- Main Chart -->
+  <div class="charts-row">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Besucher-Verlauf</div>
+          <div class="card-subtitle" id="chartSubtitle">Tägliche Besucher im ausgewählten Zeitraum</div>
+        </div>
+        <div style="display:flex;gap:12px;font-size:12px;">
+          <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted)">
+            <span style="width:12px;height:3px;background:var(--accent);border-radius:2px;display:inline-block"></span> Besucher
+          </span>
+          <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted)">
+            <span style="width:12px;height:3px;background:var(--green);border-radius:2px;display:inline-block"></span> Einmalig
+          </span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="visitorChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two-column -->
+  <div class="two-col">
+    <!-- Top Pages -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Top Seiten</div>
+          <div class="card-subtitle">Meistbesuchte Seiten</div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Pfad</th>
+            <th style="text-align:right">Besucher</th>
+          </tr>
+        </thead>
+        <tbody id="topPagesBody">
+          <tr><td colspan="2" style="text-align:center;color:var(--text-muted);padding:20px 0">Lädt...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Countries -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Herkunftsländer</div>
+          <div class="card-subtitle">Besucher nach Land</div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Land</th>
+            <th style="text-align:right">Anteil</th>
+          </tr>
+        </thead>
+        <tbody id="countriesBody">
+          <tr><td colspan="2" style="text-align:center;color:var(--text-muted);padding:20px 0">Lädt...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Referrers + Browsers -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Referrer</div>
+          <div class="card-subtitle">Woher kommen die Besucher?</div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Quelle</th><th style="text-align:right">Besucher</th></tr>
+        </thead>
+        <tbody id="referrersBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Geräte</div>
+          <div class="card-subtitle">Desktop vs. Mobil</div>
+        </div>
+      </div>
+      <div class="chart-container" style="height:180px;margin-bottom:8px">
+        <canvas id="deviceChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  Analytics-Dashboard für <a href="https://www.joseflee.co.kr" target="_blank">joseflee.co.kr</a> &nbsp;·&nbsp;
+  Unterstützt <a href="https://www.goatcounter.com" target="_blank">GoatCounter</a> &nbsp;·&nbsp;
+  <span id="footerMode">Demo-Modus</span>
+</footer>
+
+<!-- ═══ SETTINGS MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalIfBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Analytics konfigurieren</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="provider-tabs">
+      <button class="provider-tab active" onclick="selectProvider('goatcounter', this)">GoatCounter</button>
+      <button class="provider-tab" onclick="selectProvider('demo', this)">Demo-Modus</button>
+    </div>
+
+    <div id="goatcounterFields">
+      <div class="form-group">
+        <label class="form-label">GoatCounter Site-URL</label>
+        <input class="form-input" id="gcSiteUrl" type="text" placeholder="https://dein-site.goatcounter.com" />
+        <div class="form-help">Die URL deines GoatCounter-Kontos (ohne /count am Ende)</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">API-Token</label>
+        <input class="form-input" id="gcApiToken" type="password" placeholder="Dein GoatCounter API-Token" />
+        <div class="form-help">
+          Erstelle einen Token unter: Einstellungen → API → Token erstellen.
+          Dein Token muss mindestens <strong>Stats lesen</strong> dürfen.
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p style="font-size:12px;color:var(--text-muted)">
+        Falls deine GoatCounter-Statistiken öffentlich sind, kannst du den API-Token weglassen.
+        Der Token wird nur im localStorage deines Browsers gespeichert.
+      </p>
+    </div>
+
+    <div id="demoFields" style="display:none">
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.6">
+        Im Demo-Modus werden realistische Beispieldaten für <strong>joseflee.co.kr</strong> angezeigt.
+        Kein Account oder Tracking erforderlich.
+      </p>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveConfig()">Speichern &amp; Laden</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════
+
+let config = {
+  provider: 'demo',
+  gcSiteUrl: '',
+  gcApiToken: ''
+};
+
+let currentRange = 30;
+let visitorChartObj = null;
+let deviceChartObj = null;
+
+function loadConfig() {
+  try {
+    const saved = localStorage.getItem('analytics_config');
+    if (saved) config = { ...config, ...JSON.parse(saved) };
+  } catch(e) {}
+}
+
+function saveConfig() {
+  config.provider = document.querySelector('.provider-tab.active')?.dataset.provider || 'demo';
+  config.gcSiteUrl = document.getElementById('gcSiteUrl').value.trim().replace(/\/$/, '');
+  config.gcApiToken = document.getElementById('gcApiToken').value.trim();
+
+  localStorage.setItem('analytics_config', JSON.stringify(config));
+  closeModal();
+  loadData();
+}
+
+// ═══════════════════════════════════════════════
+//  DEMO DATA
+// ═══════════════════════════════════════════════
+
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+
+function generateDemoData(days) {
+  const rng = seededRandom(42 + days);
+  const data = [];
+  const now = new Date();
+
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const dow = d.getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const base = isWeekend ? 55 : 130;
+    const trend = 1 + (days - i) / (days * 8); // slight growth trend
+    const noise = 0.8 + rng() * 0.4;
+    const visits = Math.round(base * trend * noise);
+    data.push({
+      date: d.toISOString().split('T')[0],
+      visits,
+      unique: Math.round(visits * (0.65 + rng() * 0.1)),
+      pageviews: Math.round(visits * (1.8 + rng() * 0.8))
+    });
+  }
+  return data;
+}
+
+const DEMO_PAGES = [
+  { path: '/', label: 'Startseite',        visits: 3240 },
+  { path: '/about',     label: '/about',         visits: 1180 },
+  { path: '/portfolio', label: '/portfolio',      visits:  940 },
+  { path: '/contact',   label: '/contact',        visits:  720 },
+  { path: '/blog',      label: '/blog',           visits:  610 },
+  { path: '/services',  label: '/services',       visits:  490 },
+  { path: '/blog/post-1', label: '/blog/post-1',  visits:  310 },
+  { path: '/gallery',   label: '/gallery',        visits:  250 },
+];
+
+const DEMO_COUNTRIES = [
+  { flag: '🇰🇷', name: 'Südkorea',   pct: 68 },
+  { flag: '🇺🇸', name: 'USA',         pct: 10 },
+  { flag: '🇩🇪', name: 'Deutschland', pct:  6 },
+  { flag: '🇯🇵', name: 'Japan',       pct:  5 },
+  { flag: '🇨🇳', name: 'China',       pct:  4 },
+  { flag: '🇬🇧', name: 'Großbrit.',   pct:  3 },
+  { flag: '🌐', name: 'Sonstige',    pct:  4 },
+];
+
+const DEMO_REFERRERS = [
+  { name: 'Direkt',        visits: 1820 },
+  { name: 'Google',        visits: 1340 },
+  { name: 'Naver',         visits:  880 },
+  { name: 'instagram.com', visits:  420 },
+  { name: 'twitter.com',   visits:  190 },
+  { name: 'linkedin.com',  visits:  140 },
+];
+
+// ═══════════════════════════════════════════════
+//  GOATCOUNTER API
+// ═══════════════════════════════════════════════
+
+async function fetchGoatCounter(path, params = {}) {
+  const url = new URL(config.gcSiteUrl + '/api/v0/' + path);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (config.gcApiToken) headers['Authorization'] = 'Bearer ' + config.gcApiToken;
+
+  const res = await fetch(url.toString(), { headers });
+  if (!res.ok) throw new Error('GoatCounter API Fehler: ' + res.status);
+  return res.json();
+}
+
+function dateRange(days) {
+  const end = new Date();
+  const start = new Date();
+  start.setDate(start.getDate() - days);
+  return {
+    start: start.toISOString().split('T')[0],
+    end: end.toISOString().split('T')[0]
+  };
+}
+
+async function loadGoatCounterData(days) {
+  const { start, end } = dateRange(days);
+
+  const [hitsData] = await Promise.all([
+    fetchGoatCounter('stats/hits', { start, end, daily: true })
+  ]);
+
+  // Normalize hits to our format
+  const timeSeries = (hitsData.hits || []).map(h => ({
+    date: h.day,
+    visits: h.count,
+    unique: h.count_unique,
+    pageviews: h.count
+  }));
+
+  return { timeSeries };
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════
+
+function fmt(n) {
+  return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
+}
+
+function pct(a, b) {
+  if (!b) return '+0%';
+  const d = ((a - b) / b * 100).toFixed(1);
+  return (d >= 0 ? '+' : '') + d + '%';
+}
+
+function renderStats(data) {
+  const total = data.reduce((s, d) => s + d.visits, 0);
+  const unique = data.reduce((s, d) => s + d.unique, 0);
+  const pv     = data.reduce((s, d) => s + d.pageviews, 0);
+  const ppv    = total > 0 ? (pv / total).toFixed(2) : '–';
+
+  const half = Math.floor(data.length / 2);
+  const cur  = data.slice(half).reduce((s, d) => s + d.visits, 0);
+  const prev = data.slice(0, half).reduce((s, d) => s + d.visits, 0);
+  const delta = pct(cur, prev);
+  const dir   = cur >= prev ? 'up' : 'down';
+  const arrow = cur >= prev ? '↑' : '↓';
+
+  document.getElementById('totalVisits').textContent   = fmt(total);
+  document.getElementById('uniqueVisits').textContent  = fmt(unique);
+  document.getElementById('pageviews').textContent     = fmt(pv);
+  document.getElementById('pagesPerVisit').textContent = ppv;
+
+  for (const id of ['totalChange','uniqueChange','pageviewChange','pagesChange']) {
+    document.getElementById(id).innerHTML =
+      `<span>${arrow} ${delta}</span><span style="color:var(--text-muted);margin-left:4px">vs. Vorperiode</span>`;
+    document.getElementById(id).className = 'stat-change ' + dir;
+  }
+}
+
+function renderChart(data) {
+  const labels = data.map(d => {
+    const dt = new Date(d.date);
+    return dt.toLocaleDateString('de-DE', { month: 'short', day: 'numeric' });
+  });
+
+  const showEvery = Math.ceil(data.length / 12);
+  const filteredLabels = labels.map((l, i) => i % showEvery === 0 ? l : '');
+
+  if (visitorChartObj) visitorChartObj.destroy();
+
+  const ctx = document.getElementById('visitorChart').getContext('2d');
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, 260);
+  gradient.addColorStop(0, 'rgba(59,130,246,0.25)');
+  gradient.addColorStop(1, 'rgba(59,130,246,0.0)');
+
+  visitorChartObj = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Besucher',
+          data: data.map(d => d.visits),
+          borderColor: '#3b82f6',
+          backgroundColor: gradient,
+          fill: true,
+          tension: 0.3,
+          pointRadius: data.length > 30 ? 0 : 3,
+          pointHoverRadius: 5,
+          borderWidth: 2
+        },
+        {
+          label: 'Einmalig',
+          data: data.map(d => d.unique),
+          borderColor: '#10b981',
+          backgroundColor: 'transparent',
+          fill: false,
+          tension: 0.3,
+          pointRadius: data.length > 30 ? 0 : 3,
+          pointHoverRadius: 5,
+          borderWidth: 2,
+          borderDash: [4, 3]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e293b',
+          borderColor: '#334155',
+          borderWidth: 1,
+          titleColor: '#f1f5f9',
+          bodyColor: '#94a3b8',
+          padding: 10
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(51,65,85,0.4)', drawBorder: false },
+          ticks: {
+            color: '#64748b',
+            font: { size: 11 },
+            callback: (_, i) => filteredLabels[i]
+          }
+        },
+        y: {
+          grid: { color: 'rgba(51,65,85,0.4)', drawBorder: false },
+          ticks: { color: '#64748b', font: { size: 11 } },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function renderTopPages(pages, totalVisits) {
+  const max = Math.max(...pages.map(p => p.visits));
+  const tbody = document.getElementById('topPagesBody');
+  tbody.innerHTML = pages.slice(0, 8).map(p => `
+    <tr>
+      <td>
+        <span class="page-path">${p.path || p.label}</span>
+      </td>
+      <td>
+        <div class="bar-inline">
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(p.visits/max*100)}%"></div></div>
+          <span style="white-space:nowrap;font-size:13px">${fmt(p.visits)}</span>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderCountries(countries) {
+  const tbody = document.getElementById('countriesBody');
+  tbody.innerHTML = countries.map(c => `
+    <tr>
+      <td><span class="flag">${c.flag}</span>${c.name}</td>
+      <td>
+        <div class="bar-inline">
+          <div class="bar-track"><div class="bar-fill" style="width:${c.pct}%;background:var(--purple)"></div></div>
+          <span>${c.pct}%</span>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderReferrers(refs) {
+  const max = Math.max(...refs.map(r => r.visits));
+  document.getElementById('referrersBody').innerHTML = refs.map(r => `
+    <tr>
+      <td>${r.name}</td>
+      <td>
+        <div class="bar-inline">
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(r.visits/max*100)}%;background:var(--yellow)"></div></div>
+          <span>${fmt(r.visits)}</span>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderDeviceChart(data) {
+  if (deviceChartObj) deviceChartObj.destroy();
+  const ctx = document.getElementById('deviceChart').getContext('2d');
+  deviceChartObj = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        data: data.values,
+        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+        borderColor: '#1e293b',
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: '#94a3b8',
+            font: { size: 12 },
+            padding: 12,
+            boxWidth: 12,
+            boxHeight: 12
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1e293b',
+          borderColor: '#334155',
+          borderWidth: 1,
+          titleColor: '#f1f5f9',
+          bodyColor: '#94a3b8'
+        }
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  LOAD DATA
+// ═══════════════════════════════════════════════
+
+async function loadData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.innerHTML = '<span class="loading-spinner"></span> Lädt';
+  btn.disabled = true;
+
+  try {
+    let timeSeries, pages, countries, referrers, devices;
+
+    if (config.provider === 'goatcounter' && config.gcSiteUrl) {
+      // Live GoatCounter data
+      try {
+        const result = await loadGoatCounterData(currentRange);
+        timeSeries = result.timeSeries;
+        pages      = DEMO_PAGES;   // fallback for pages/countries in free tier
+        countries  = DEMO_COUNTRIES;
+        referrers  = DEMO_REFERRERS;
+        devices    = { labels: ['Desktop', 'Mobil', 'Tablet'], values: [54, 38, 8] };
+
+        document.getElementById('modeBadge').textContent = 'Live';
+        document.getElementById('modeBadge').className = 'demo-badge live';
+        document.getElementById('setupBanner').style.display = 'none';
+        document.getElementById('footerMode').textContent = 'Live-Daten via GoatCounter';
+      } catch(err) {
+        console.error('GoatCounter Fehler:', err);
+        alert('Fehler beim Laden der GoatCounter-Daten: ' + err.message);
+        timeSeries = generateDemoData(currentRange);
+        pages      = DEMO_PAGES;
+        countries  = DEMO_COUNTRIES;
+        referrers  = DEMO_REFERRERS;
+        devices    = { labels: ['Desktop', 'Mobil', 'Tablet'], values: [54, 38, 8] };
+      }
+    } else {
+      // Demo mode
+      timeSeries = generateDemoData(currentRange);
+      pages      = DEMO_PAGES;
+      countries  = DEMO_COUNTRIES;
+      referrers  = DEMO_REFERRERS;
+      devices    = { labels: ['Desktop', 'Mobil', 'Tablet'], values: [54, 38, 8] };
+    }
+
+    // Scale demo data to selected range
+    const scaleFactor = currentRange / 365;
+    const scaledPages = pages.map(p => ({
+      ...p, visits: Math.round(p.visits * scaleFactor * (0.8 + Math.random() * 0.4))
+    }));
+    const scaledRefs = referrers.map(r => ({
+      ...r, visits: Math.round(r.visits * scaleFactor * (0.8 + Math.random() * 0.4))
+    }));
+
+    renderStats(timeSeries);
+    renderChart(timeSeries);
+    renderTopPages(scaledPages);
+    renderCountries(countries);
+    renderReferrers(scaledRefs);
+    renderDeviceChart(devices);
+
+    // Realtime (simulated)
+    document.getElementById('realtimeCount').textContent = Math.floor(2 + Math.random() * 12);
+
+    document.getElementById('lastUpdated').textContent =
+      'Aktualisiert: ' + new Date().toLocaleTimeString('de-DE');
+
+  } finally {
+    btn.innerHTML = '↻ Aktualisieren';
+    btn.disabled = false;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  UI HELPERS
+// ═══════════════════════════════════════════════
+
+document.querySelectorAll('.range-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.range-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    currentRange = parseInt(this.dataset.range, 10);
+    document.getElementById('chartSubtitle').textContent =
+      'Tägliche Besucher – letzten ' + currentRange + ' Tage';
+    loadData();
+  });
+});
+
+function openModal() {
+  document.getElementById('gcSiteUrl').value  = config.gcSiteUrl;
+  document.getElementById('gcApiToken').value = config.gcApiToken;
+  selectProvider(config.provider);
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function closeModalIfBg(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function selectProvider(provider, btn) {
+  document.querySelectorAll('.provider-tab').forEach(t => {
+    t.classList.remove('active');
+    t.dataset.provider = t.textContent.toLowerCase().replace(/[- ]/g, '');
+  });
+
+  // Fix provider tab dataset
+  document.querySelectorAll('.provider-tab').forEach(t => {
+    if (t.textContent.includes('GoatCounter')) t.dataset.provider = 'goatcounter';
+    if (t.textContent.includes('Demo'))        t.dataset.provider = 'demo';
+    if (t.dataset.provider === provider)       t.classList.add('active');
+  });
+
+  document.getElementById('goatcounterFields').style.display =
+    provider === 'goatcounter' ? 'block' : 'none';
+  document.getElementById('demoFields').style.display =
+    provider === 'demo' ? 'block' : 'none';
+}
+
+// Auto-refresh every 5 minutes
+setInterval(loadData, 5 * 60 * 1000);
+
+// Animate realtime counter
+setInterval(() => {
+  const el = document.getElementById('realtimeCount');
+  if (el.textContent !== '–') {
+    const cur = parseInt(el.textContent, 10) || 5;
+    el.textContent = Math.max(1, cur + Math.round(Math.random() * 3 - 1));
+  }
+}, 8000);
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+loadConfig();
+loadData();
+</script>
+</body>
+</html>
