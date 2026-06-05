@@ -1,122 +1,175 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Besucher-Analytik – joseflee.co.kr</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <title>영화 인맥 관리 – FilmNet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface2: #273449;
-      --border: #334155;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
+      --bg: #0b1120;
+      --surface: #141e30;
+      --surface2: #1c2840;
+      --surface3: #243250;
+      --border: #2a3a54;
+      --border2: #344766;
+      --text: #e8f0fe;
+      --text-muted: #8da3c4;
+      --text-dim: #4f6a8a;
       --accent: #3b82f6;
       --accent-hover: #2563eb;
+      --accent-glow: rgba(59,130,246,0.25);
       --green: #10b981;
       --red: #ef4444;
       --yellow: #f59e0b;
       --purple: #8b5cf6;
       --orange: #f97316;
+      --cyan: #06b6d4;
+      --pink: #ec4899;
+      --lime: #84cc16;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      overflow: hidden;
     }
 
-    /* ── HEADER ── */
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* ═══ HEADER ═══ */
     .header {
+      height: 60px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 0 24px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: 60px;
-      position: sticky;
-      top: 0;
+      padding: 0 20px;
+      gap: 16px;
+      position: relative;
       z-index: 100;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .site-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
-      border-radius: 8px;
+    .logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
+      flex-shrink: 0;
+      box-shadow: 0 0 16px rgba(59,130,246,0.4);
     }
 
-    .header h1 {
+    .app-name {
       font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .header h1 span {
+    .app-name span { color: var(--text-muted); font-weight: 400; }
+
+    .nav-tabs {
+      display: flex;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .nav-tab {
+      padding: 6px 16px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
       color: var(--text-muted);
-      font-weight: 400;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .demo-badge {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--yellow);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+    .nav-tab:hover { color: var(--text); }
+    .nav-tab.active { background: var(--accent); color: #fff; }
+
+    .header-search {
+      flex: 1;
+      max-width: 380px;
+      position: relative;
     }
 
-    .demo-badge.live {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--green);
-      border-color: rgba(16, 185, 129, 0.3);
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 13px;
+      pointer-events: none;
     }
+
+    .search-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 13px;
+      padding: 8px 12px 8px 32px;
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--text-dim); }
 
     .header-right {
+      margin-left: auto;
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
 
+    /* ═══ BUTTONS ═══ */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border2);
       background: var(--surface2);
       color: var(--text);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s;
-      text-decoration: none;
+      font-family: inherit;
+      white-space: nowrap;
     }
 
-    .btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
 
     .btn-primary {
       background: var(--accent);
@@ -130,293 +183,505 @@
       color: #fff;
     }
 
-    /* ── MAIN LAYOUT ── */
-    .main {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 24px;
+    .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+    .btn-danger { border-color: rgba(239,68,68,0.4); color: var(--red); }
+    .btn-danger:hover { background: rgba(239,68,68,0.1); border-color: var(--red); }
+
+    .icon-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      line-height: 1;
     }
 
-    /* ── TOOLBAR ── */
-    .toolbar {
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .icon-btn.del:hover { border-color: var(--red); color: var(--red); }
+
+    /* ═══ MAIN LAYOUT ═══ */
+    .main {
+      height: calc(100vh - 60px);
+      overflow: hidden;
+    }
+
+    .view {
+      display: none;
+      height: 100%;
+    }
+
+    .view.active { display: flex; flex-direction: column; }
+
+    /* ═══ CONTACTS VIEW ═══ */
+    #view-contacts { overflow-y: auto; padding: 24px; }
+
+    .contacts-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .contacts-count {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .filter-select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 12px;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    .filter-select:focus { border-color: var(--accent); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+      gap: 14px;
+    }
+
+    /* ═══ CONTACT CARD ═══ */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 14px 14px 0 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+    }
+
+    .contact-card:hover::before { opacity: 1; }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    }
+
+    .card-info { flex: 1; min-width: 0; }
+
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-pos {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .card-co {
+      font-size: 11px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .contact-card:hover .card-actions { opacity: 1; }
+
+    .card-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .card-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      gap: 12px;
     }
 
-    .range-tabs {
+    .card-films {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .card-univ {
+      font-size: 11px;
+      color: var(--text-dim);
+      max-width: 130px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ═══ EMPTY STATE ═══ */
+    .empty {
+      text-align: center;
+      padding: 80px 24px;
+      grid-column: 1 / -1;
+    }
+
+    .empty-icon { font-size: 52px; margin-bottom: 16px; }
+    .empty-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .empty-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+
+    /* ═══ GRAPH VIEW ═══ */
+    #view-graph { flex-direction: row; }
+
+    .graph-canvas {
+      flex: 1;
+      position: relative;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    #graph-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .graph-controls {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 10;
       display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ctrl-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 4px;
-      gap: 2px;
+      padding: 12px 14px;
+      min-width: 190px;
     }
 
-    .range-tab {
-      padding: 6px 14px;
-      border-radius: 7px;
-      border: none;
-      background: transparent;
+    .ctrl-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .toggle-row:last-child { margin-bottom: 0; }
+
+    .toggle-label {
+      font-size: 12px;
       color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .range-tab:hover { color: var(--text); }
-
-    .range-tab.active {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .toolbar-right {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .last-updated {
-      font-size: 12px;
-      color: var(--text-muted);
+    .edge-line {
+      width: 20px;
+      height: 2px;
+      border-radius: 1px;
+      flex-shrink: 0;
     }
 
-    /* ── STAT CARDS ── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
+    .edge-line.dashed {
+      background: none;
+      border-top: 2px dashed var(--yellow);
     }
 
-    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
+    /* Toggle switch */
+    .tog {
       position: relative;
-      overflow: hidden;
+      display: inline-block;
+      width: 34px;
+      height: 18px;
+      flex-shrink: 0;
     }
 
-    .stat-card::before {
-      content: '';
+    .tog input { display: none; }
+
+    .tog-track {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      border-radius: 12px 12px 0 0;
+      inset: 0;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background 0.2s;
     }
 
-    .stat-card.blue::before  { background: var(--accent); }
-    .stat-card.green::before { background: var(--green); }
-    .stat-card.purple::before { background: var(--purple); }
-    .stat-card.orange::before { background: var(--orange); }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
+    .tog input:checked + .tog-track {
+      background: var(--accent);
+      border-color: var(--accent);
     }
 
-    .stat-value {
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 8px;
+    .tog-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: transform 0.2s, background 0.2s;
+      pointer-events: none;
     }
 
-    .stat-card.blue  .stat-value { color: var(--accent-hover)… }
-    .stat-change {
-      font-size: 12px;
+    .tog input:checked ~ .tog-thumb {
+      transform: translateX(16px);
+      background: #fff;
+    }
+
+    /* Legend */
+    .legend { display: flex; flex-direction: column; gap: 5px; }
+
+    .legend-item {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
     }
 
-    .stat-change.up   { color: var(--green); }
-    .stat-change.down { color: var(--red); }
-    .stat-change.neutral { color: var(--text-muted); }
-
-    /* ── CHARTS ROW ── */
-    .charts-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    .card {
+    /* Graph stat */
+    .graph-stat {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .graph-stat span { color: var(--text); font-weight: 600; }
+
+    /* Graph tooltip */
+    .g-tip {
+      position: fixed;
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 400;
+      opacity: 0;
+      transition: opacity 0.12s;
+      max-width: 220px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .g-tip.show { opacity: 1; }
+    .g-tip-name { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
+    .g-tip-sub { color: var(--text-muted); line-height: 1.4; }
+
+    /* ═══ GRAPH SIDE PANEL ═══ */
+    .graph-panel {
+      width: 0;
+      min-width: 0;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      overflow: hidden;
+      transition: width 0.28s ease;
+      flex-shrink: 0;
+    }
+
+    .graph-panel.open { width: 310px; }
+
+    .panel-scroll {
+      width: 310px;
+      height: 100%;
+      overflow-y: auto;
       padding: 20px;
     }
 
-    .card-header {
+    .panel-close-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
     }
 
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .card-subtitle {
+    .panel-header-title {
       font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 260px;
-    }
-
-    /* ── TWO-COLUMN ── */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
-
-    /* ── TABLES ── */
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .data-table th {
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      padding: 0 0 12px;
     }
 
-    .data-table th:last-child,
-    .data-table td:last-child { text-align: right; }
-
-    .data-table td {
-      padding: 10px 0;
-      font-size: 13px;
-      border-top: 1px solid var(--border);
-    }
-
-    .page-path {
-      color: var(--accent-light, #60a5fa);
-      font-family: monospace;
-      font-size: 12px;
-    }
-
-    .bar-inline {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .bar-track {
-      flex: 1;
-      height: 4px;
-      background: var(--surface2);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      background: var(--accent);
-    }
-
-    .flag {
-      font-size: 16px;
-      margin-right: 6px;
-    }
-
-    /* ── SETUP BANNER ── */
-    .setup-banner {
-      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
-      border: 1px solid rgba(59,130,246,0.3);
-      border-radius: 12px;
-      padding: 20px 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .setup-banner-icon {
-      font-size: 24px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .setup-banner h3 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .setup-banner p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .setup-steps {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .setup-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .step-num {
-      width: 20px;
-      height: 20px;
-      background: var(--accent);
-      color: #fff;
+    .panel-avatar {
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      font-size: 11px;
-      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 auto 12px;
     }
 
-    /* ── MODAL ── */
-    .modal-overlay {
+    .panel-name {
+      font-size: 17px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .panel-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .panel-meta-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .panel-meta-icon { color: var(--text-dim); flex-shrink: 0; width: 14px; }
+
+    .sec-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-section { margin-bottom: 20px; }
+
+    .p-film-item {
+      background: var(--surface2);
+      border-radius: 7px;
+      padding: 9px 11px;
+      margin-bottom: 7px;
+    }
+
+    .p-film-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .p-film-meta { font-size: 11px; color: var(--text-muted); }
+
+    .p-conn-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .p-conn-item:last-child { border-bottom: none; }
+    .p-conn-item:hover .p-conn-name { color: var(--accent); }
+
+    .p-conn-av {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .p-conn-info { flex: 1; min-width: 0; }
+    .p-conn-name { font-size: 13px; font-weight: 600; }
+    .p-conn-pos { font-size: 11px; color: var(--text-muted); }
+
+    .badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-film { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .badge-univ { background: rgba(245,158,11,0.15); color: var(--yellow); }
+
+    /* ═══ MODALS ═══ */
+    .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(5px);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -426,908 +691,1425 @@
       transition: opacity 0.2s;
     }
 
-    .modal-overlay.open {
+    .overlay.open {
       opacity: 1;
       pointer-events: auto;
     }
 
     .modal {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border2);
       border-radius: 16px;
-      padding: 28px;
-      width: 480px;
+      width: 560px;
       max-width: calc(100vw - 32px);
-      transform: translateY(12px);
+      max-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(16px) scale(0.98);
       transition: transform 0.2s;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     }
 
-    .modal-overlay.open .modal {
-      transform: translateY(0);
+    .overlay.open .modal {
+      transform: translateY(0) scale(1);
     }
 
-    .modal-header {
+    .modal-lg { width: 660px; }
+
+    .mh {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
     }
 
-    .modal-title {
-      font-size: 16px;
-      font-weight: 600;
-    }
+    .mh-title { font-size: 16px; font-weight: 700; }
 
-    .modal-close {
+    .m-close {
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
-      line-height: 1;
       padding: 4px;
+      border-radius: 6px;
+      line-height: 1;
+      transition: all 0.15s;
     }
 
-    .modal-close:hover { color: var(--text); }
+    .m-close:hover { background: var(--surface2); color: var(--text); }
 
-    .form-group {
-      margin-bottom: 16px;
+    .mbody {
+      overflow-y: auto;
+      flex: 1;
+      padding: 20px 22px;
     }
 
-    .form-label {
-      display: block;
+    .mfoot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .mfoot-right { margin-left: auto; display: flex; gap: 8px; }
+
+    /* Form tabs */
+    .form-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .form-tab {
+      padding: 8px 16px;
+      border: none;
+      background: none;
+      color: var(--text-muted);
       font-size: 13px;
       font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
     }
 
-    .form-input {
+    .form-tab:hover { color: var(--text); }
+    .form-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Form fields */
+    .fg { margin-bottom: 14px; }
+
+    .fg-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .fg label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    .fi, .fs, .fta {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-size: 14px;
-      padding: 9px 12px;
+      font-size: 13px;
+      padding: 9px 11px;
       outline: none;
       transition: border-color 0.15s;
+      font-family: inherit;
     }
 
-    .form-input:focus {
-      border-color: var(--accent);
-    }
+    .fi:focus, .fs:focus, .fta:focus { border-color: var(--accent); }
 
-    .form-help {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 5px;
-    }
+    .fta { resize: vertical; min-height: 76px; }
 
-    .form-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-      margin-top: 20px;
-    }
+    /* Film rows */
+    .film-rows { display: flex; flex-direction: column; gap: 9px; margin-bottom: 10px; }
 
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 20px 0;
-    }
-
-    .provider-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .provider-tab {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
+    .film-row {
+      display: grid;
+      grid-template-columns: 1fr 72px 1fr 28px;
+      gap: 7px;
+      align-items: center;
+      background: var(--surface2);
       border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 500;
+      border-radius: 9px;
+      padding: 10px;
+    }
+
+    .film-row .fi {
+      background: var(--surface3);
+      padding: 7px 9px;
+    }
+
+    .film-row-del {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid rgba(239,68,68,0.3);
+      background: rgba(239,68,68,0.08);
+      color: var(--red);
+      font-size: 13px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .film-row-del:hover { background: rgba(239,68,68,0.18); }
+
+    .films-empty {
       text-align: center;
+      padding: 20px;
+      color: var(--text-dim);
+      font-size: 13px;
+      background: var(--surface2);
+      border: 1px dashed var(--border2);
+      border-radius: 9px;
+      margin-bottom: 10px;
+    }
+
+    /* ═══ DETAIL MODAL ═══ */
+    .detail-hero {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .detail-av {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .detail-name { font-size: 21px; font-weight: 700; margin-bottom: 3px; }
+    .detail-pos { font-size: 13px; color: var(--text-muted); margin-bottom: 2px; }
+    .detail-co { font-size: 12px; color: var(--text-dim); }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .dg-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+    .dg-value { font-size: 13px; }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filmography { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+
+    .film-entry {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 9px 12px;
+    }
+
+    .film-yr {
+      font-size: 11px;
+      color: var(--text-dim);
+      width: 34px;
+      flex-shrink: 0;
+    }
+
+    .film-ttl { flex: 1; font-size: 13px; font-weight: 600; }
+
+    .film-role {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: rgba(59,130,246,0.12);
+      color: #60a5fa;
+      border-radius: 20px;
+    }
+
+    .conns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .conn-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px 12px;
+      cursor: pointer;
       transition: all 0.15s;
     }
 
-    .provider-tab.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(59,130,246,0.1);
-    }
+    .conn-card:hover { border-color: var(--accent); }
 
-    /* ── FOOTER ── */
-    .footer {
-      text-align: center;
-      padding: 24px;
-      font-size: 12px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    /* ── LOADING ── */
-    .loading-spinner {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .skeleton {
-      background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.2s infinite;
-      border-radius: 4px;
-    }
-
-    @keyframes shimmer { to { background-position: -200% 0; } }
-
-    /* ── REALTIME DOT ── */
-    .realtime {
+    .conn-card-top {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
-      color: var(--text-muted);
+      margin-bottom: 7px;
     }
 
-    .dot {
-      width: 8px;
-      height: 8px;
+    .cc-av {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.7); }
+    .cc-name { font-size: 13px; font-weight: 600; }
+
+    .cc-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    /* ═══ TOAST ═══ */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      z-index: 999;
+      transform: translateY(12px);
+      opacity: 0;
+      transition: all 0.25s;
+      max-width: 300px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.ok { border-color: var(--green); color: var(--green); }
+    .toast.err { border-color: var(--red); color: var(--red); }
+
+    /* ═══ D3 GRAPH STYLES ═══ */
+    .node { cursor: pointer; }
+
+    .node-label {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 11px;
+      fill: #94a3b8;
+      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.8);
+    }
+
+    .node-initials {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      fill: #fff;
+      pointer-events: none;
+    }
+
+    .link-line {
+      transition: stroke-opacity 0.2s;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 700px) {
+      .app-name { display: none; }
+      #view-contacts { padding: 16px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .fg-row { grid-template-columns: 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .conns-grid { grid-template-columns: 1fr; }
+      .graph-panel.open { width: 260px; }
+      .panel-scroll { width: 260px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══ HEADER ═══ -->
+<!-- ═══════════════ HEADER ═══════════════ -->
 <header class="header">
-  <div class="header-left">
-    <div class="site-icon">📊</div>
-    <h1>joseflee.co.kr <span>/ Analytik</span></h1>
-    <span class="demo-badge" id="modeBadge">Demo</span>
+  <div class="logo">🎬</div>
+  <div class="app-name">영화 인맥 관리 <span>/ FilmNet</span></div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-contacts" onclick="showView('contacts')">
+      <span>👥</span> 연락처
+    </button>
+    <button class="nav-tab" id="tab-graph" onclick="showView('graph')">
+      <span>🕸</span> 네트워크
+    </button>
   </div>
+
+  <div class="header-search">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchInput" placeholder="이름, 회사, 영화로 검색…" oninput="onSearch(this.value)">
+  </div>
+
   <div class="header-right">
-    <div class="realtime">
-      <div class="dot"></div>
-      <span id="realtimeCount">–</span> aktive Besucher
-    </div>
-    <button class="btn" onclick="openModal()">⚙ Konfigurieren</button>
-    <button class="btn" id="refreshBtn" onclick="loadData()">↻ Aktualisieren</button>
+    <button class="btn btn-primary" onclick="openAdd()">＋ 연락처 추가</button>
   </div>
 </header>
 
-<!-- ═══ MAIN ═══ -->
+<!-- ═══════════════ MAIN ═══════════════ -->
 <main class="main">
 
-  <!-- Setup Banner (shown when in demo mode) -->
-  <div class="setup-banner" id="setupBanner">
-    <div class="setup-banner-icon">💡</div>
-    <div>
-      <h3>Demo-Modus aktiv – Echte Daten einrichten</h3>
-      <p>Diese Seite zeigt Beispieldaten. Um echte Besucherzahlen von <strong>joseflee.co.kr</strong> anzuzeigen, folge diesen Schritten:</p>
-      <div class="setup-steps">
-        <div class="setup-step">
-          <div class="step-num">1</div>
-          <span>Registriere ein kostenloses Konto bei <strong>GoatCounter</strong> (<a href="https://goatcounter.com" target="_blank" style="color:var(--accent)">goatcounter.com</a>) für joseflee.co.kr</span>
-        </div>
-        <div class="setup-step">
-          <div class="step-num">2</div>
-          <span>Füge das Tracking-Skript zu joseflee.co.kr hinzu: <code style="color:var(--accent);font-size:11px">&lt;script data-goatcounter="https://DEIN-SITE.goatcounter.com/count" async src="//gc.zgo.at/count.js"&gt;&lt;/script&gt;</code></span>
-        </div>
-        <div class="setup-step">
-          <div class="step-num">3</div>
-          <span>Klicke auf <strong>Konfigurieren</strong> (oben rechts) und gib deine GoatCounter-URL und deinen API-Token ein</span>
-        </div>
-      </div>
+  <!-- ── 연락처 뷰 ── -->
+  <div id="view-contacts" class="view active">
+    <div class="contacts-bar">
+      <span class="contacts-count" id="cCount">로딩 중…</span>
+      <select class="filter-select" id="posFilter" onchange="onFilter(this.value)">
+        <option value="">모든 직책</option>
+        <option>감독</option>
+        <option>배우</option>
+        <option>프로듀서</option>
+        <option>촬영감독</option>
+        <option>작가</option>
+        <option>편집자</option>
+        <option>음악감독</option>
+        <option>미술감독</option>
+        <option>조감독</option>
+        <option>기타</option>
+      </select>
     </div>
+    <div class="contact-grid" id="cGrid"></div>
   </div>
 
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <div class="range-tabs">
-      <button class="range-tab" data-range="1">Heute</button>
-      <button class="range-tab" data-range="7">7 Tage</button>
-      <button class="range-tab active" data-range="30">30 Tage</button>
-      <button class="range-tab" data-range="90">90 Tage</button>
-      <button class="range-tab" data-range="365">1 Jahr</button>
-    </div>
-    <div class="toolbar-right">
-      <span class="last-updated" id="lastUpdated">–</span>
-    </div>
-  </div>
+  <!-- ── 네트워크 뷰 ── -->
+  <div id="view-graph" class="view">
+    <div class="graph-canvas">
+      <svg id="graph-svg"></svg>
 
-  <!-- Stat Cards -->
-  <div class="stats-grid">
-    <div class="stat-card blue">
-      <div class="stat-label">Besucher (gesamt)</div>
-      <div class="stat-value" id="totalVisits">–</div>
-      <div class="stat-change" id="totalChange">–</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-label">Einmalige Besucher</div>
-      <div class="stat-value" id="uniqueVisits">–</div>
-      <div class="stat-change" id="uniqueChange">–</div>
-    </div>
-    <div class="stat-card purple">
-      <div class="stat-label">Seitenaufrufe</div>
-      <div class="stat-value" id="pageviews">–</div>
-      <div class="stat-change" id="pageviewChange">–</div>
-    </div>
-    <div class="stat-card orange">
-      <div class="stat-label">Ø Seitenaufrufe/Besuch</div>
-      <div class="stat-value" id="pagesPerVisit">–</div>
-      <div class="stat-change" id="pagesChange">–</div>
-    </div>
-  </div>
-
-  <!-- Main Chart -->
-  <div class="charts-row">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Besucher-Verlauf</div>
-          <div class="card-subtitle" id="chartSubtitle">Tägliche Besucher im ausgewählten Zeitraum</div>
+      <div class="graph-controls">
+        <!-- 연결 필터 -->
+        <div class="ctrl-card">
+          <div class="ctrl-title">연결 유형 표시</div>
+          <div class="toggle-row">
+            <span class="toggle-label">
+              <span class="edge-line" style="background:var(--accent)"></span>
+              영화 공동 참여
+            </span>
+            <label class="tog">
+              <input type="checkbox" id="togFilm" checked onchange="onEdgeToggle()">
+              <span class="tog-track"></span>
+              <span class="tog-thumb"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label">
+              <span class="edge-line dashed"></span>
+              동문 (같은 대학)
+            </span>
+            <label class="tog">
+              <input type="checkbox" id="togUniv" checked onchange="onEdgeToggle()">
+              <span class="tog-track"></span>
+              <span class="tog-thumb"></span>
+            </label>
+          </div>
         </div>
-        <div style="display:flex;gap:12px;font-size:12px;">
-          <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted)">
-            <span style="width:12px;height:3px;background:var(--accent);border-radius:2px;display:inline-block"></span> Besucher
-          </span>
-          <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted)">
-            <span style="width:12px;height:3px;background:var(--green);border-radius:2px;display:inline-block"></span> Einmalig
-          </span>
-        </div>
-      </div>
-      <div class="chart-container">
-        <canvas id="visitorChart"></canvas>
-      </div>
-    </div>
-  </div>
 
-  <!-- Two-column -->
-  <div class="two-col">
-    <!-- Top Pages -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Top Seiten</div>
-          <div class="card-subtitle">Meistbesuchte Seiten</div>
+        <!-- 통계 -->
+        <div class="ctrl-card">
+          <div class="ctrl-title">네트워크 통계</div>
+          <div class="graph-stat">연락처 <span id="gStatNodes">0</span>명</div>
+          <div class="graph-stat">영화 연결 <span id="gStatFilm">0</span>건</div>
+          <div class="graph-stat">동문 연결 <span id="gStatUniv">0</span>건</div>
+        </div>
+
+        <!-- 직책 범례 -->
+        <div class="ctrl-card">
+          <div class="ctrl-title">직책 범례</div>
+          <div class="legend" id="graphLegend"></div>
+        </div>
+
+        <!-- 컨트롤 -->
+        <div class="ctrl-card">
+          <button class="btn btn-sm" style="width:100%;justify-content:center" onclick="resetZoom()">
+            ⟳ 화면 초기화
+          </button>
         </div>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Pfad</th>
-            <th style="text-align:right">Besucher</th>
-          </tr>
-        </thead>
-        <tbody id="topPagesBody">
-          <tr><td colspan="2" style="text-align:center;color:var(--text-muted);padding:20px 0">Lädt...</td></tr>
-        </tbody>
-      </table>
+
+      <!-- 툴팁 -->
+      <div class="g-tip" id="gTip">
+        <div class="g-tip-name" id="gTipName"></div>
+        <div class="g-tip-sub" id="gTipSub"></div>
+      </div>
     </div>
 
-    <!-- Countries -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Herkunftsländer</div>
-          <div class="card-subtitle">Besucher nach Land</div>
-        </div>
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Land</th>
-            <th style="text-align:right">Anteil</th>
-          </tr>
-        </thead>
-        <tbody id="countriesBody">
-          <tr><td colspan="2" style="text-align:center;color:var(--text-muted);padding:20px 0">Lädt...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Referrers + Browsers -->
-  <div class="two-col">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Referrer</div>
-          <div class="card-subtitle">Woher kommen die Besucher?</div>
-        </div>
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Quelle</th><th style="text-align:right">Besucher</th></tr>
-        </thead>
-        <tbody id="referrersBody"></tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Geräte</div>
-          <div class="card-subtitle">Desktop vs. Mobil</div>
-        </div>
-      </div>
-      <div class="chart-container" style="height:180px;margin-bottom:8px">
-        <canvas id="deviceChart"></canvas>
-      </div>
+    <!-- 사이드 패널 -->
+    <div class="graph-panel" id="graphPanel">
+      <div class="panel-scroll" id="panelScroll"></div>
     </div>
   </div>
 
 </main>
 
-<!-- ═══ FOOTER ═══ -->
-<footer class="footer">
-  Analytics-Dashboard für <a href="https://www.joseflee.co.kr" target="_blank">joseflee.co.kr</a> &nbsp;·&nbsp;
-  Unterstützt <a href="https://www.goatcounter.com" target="_blank">GoatCounter</a> &nbsp;·&nbsp;
-  <span id="footerMode">Demo-Modus</span>
-</footer>
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div class="toast" id="toast"></div>
 
-<!-- ═══ SETTINGS MODAL ═══ -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalIfBg(event)">
+<!-- ═══════════════ FORM MODAL ═══════════════ -->
+<div class="overlay" id="formOverlay" onclick="closeFormBg(event)">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Analytics konfigurieren</div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="mh">
+      <div class="mh-title" id="formTitle">연락처 추가</div>
+      <button class="m-close" onclick="closeForm()">✕</button>
     </div>
 
-    <div class="provider-tabs">
-      <button class="provider-tab active" onclick="selectProvider('goatcounter', this)">GoatCounter</button>
-      <button class="provider-tab" onclick="selectProvider('demo', this)">Demo-Modus</button>
-    </div>
-
-    <div id="goatcounterFields">
-      <div class="form-group">
-        <label class="form-label">GoatCounter Site-URL</label>
-        <input class="form-input" id="gcSiteUrl" type="text" placeholder="https://dein-site.goatcounter.com" />
-        <div class="form-help">Die URL deines GoatCounter-Kontos (ohne /count am Ende)</div>
+    <div class="mbody">
+      <div class="form-tabs">
+        <button class="form-tab active" id="ftab-basic" onclick="switchFTab('basic')">기본 정보</button>
+        <button class="form-tab" id="ftab-films" onclick="switchFTab('films')">필모그래피</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">API-Token</label>
-        <input class="form-input" id="gcApiToken" type="password" placeholder="Dein GoatCounter API-Token" />
-        <div class="form-help">
-          Erstelle einen Token unter: Einstellungen → API → Token erstellen.
-          Dein Token muss mindestens <strong>Stats lesen</strong> dürfen.
+
+      <!-- 기본 정보 -->
+      <div class="tab-pane active" id="fpane-basic">
+        <div class="fg-row">
+          <div class="fg">
+            <label>이름 *</label>
+            <input class="fi" id="f-name" placeholder="홍길동">
+          </div>
+          <div class="fg">
+            <label>직책</label>
+            <select class="fs" id="f-pos">
+              <option value="">선택하세요</option>
+              <option>감독</option>
+              <option>배우</option>
+              <option>프로듀서</option>
+              <option>촬영감독</option>
+              <option>작가</option>
+              <option>편집자</option>
+              <option>음악감독</option>
+              <option>미술감독</option>
+              <option>조감독</option>
+              <option>기타</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg-row">
+          <div class="fg">
+            <label>이메일</label>
+            <input class="fi" id="f-email" type="email" placeholder="name@example.com">
+          </div>
+          <div class="fg">
+            <label>전화번호</label>
+            <input class="fi" id="f-phone" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <div class="fg-row">
+          <div class="fg">
+            <label>소속사 / 회사</label>
+            <input class="fi" id="f-company" placeholder="회사명">
+          </div>
+          <div class="fg">
+            <label>출신 대학교</label>
+            <input class="fi" id="f-univ" placeholder="대학교 이름">
+          </div>
+        </div>
+        <div class="fg">
+          <label>메모</label>
+          <textarea class="fta" id="f-notes" placeholder="특이사항, 수상 이력 등…"></textarea>
         </div>
       </div>
-      <div class="divider"></div>
-      <p style="font-size:12px;color:var(--text-muted)">
-        Falls deine GoatCounter-Statistiken öffentlich sind, kannst du den API-Token weglassen.
-        Der Token wird nur im localStorage deines Browsers gespeichert.
-      </p>
+
+      <!-- 필모그래피 -->
+      <div class="tab-pane" id="fpane-films">
+        <div class="film-rows" id="filmRows"></div>
+        <button class="btn" style="width:100%;justify-content:center" onclick="addFilmRow()">
+          ＋ 영화 추가
+        </button>
+        <p style="font-size:11px;color:var(--text-dim);margin-top:10px;text-align:center">
+          같은 영화 제목을 입력한 연락처끼리 자동으로 연결됩니다
+        </p>
+      </div>
     </div>
 
-    <div id="demoFields" style="display:none">
-      <p style="font-size:13px;color:var(--text-muted);line-height:1.6">
-        Im Demo-Modus werden realistische Beispieldaten für <strong>joseflee.co.kr</strong> angezeigt.
-        Kein Account oder Tracking erforderlich.
-      </p>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn" onclick="closeModal()">Abbrechen</button>
-      <button class="btn btn-primary" onclick="saveConfig()">Speichern &amp; Laden</button>
+    <div class="mfoot">
+      <div class="mfoot-right">
+        <button class="btn" onclick="closeForm()">취소</button>
+        <button class="btn btn-primary" onclick="saveContact()">저장</button>
+      </div>
     </div>
   </div>
 </div>
 
-<script>
-// ═══════════════════════════════════════════════
-//  CONFIG
-// ═══════════════════════════════════════════════
+<!-- ═══════════════ DETAIL MODAL ═══════════════ -->
+<div class="overlay" id="detailOverlay" onclick="closeDetailBg(event)">
+  <div class="modal modal-lg">
+    <div class="mh">
+      <div class="mh-title">연락처 상세 정보</div>
+      <button class="m-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="mbody" id="detailBody"></div>
+    <div class="mfoot">
+      <button class="btn btn-danger" id="detDelBtn">삭제</button>
+      <div class="mfoot-right">
+        <button class="btn" onclick="closeDetail()">닫기</button>
+        <button class="btn btn-primary" id="detEditBtn">수정</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-let config = {
-  provider: 'demo',
-  gcSiteUrl: '',
-  gcApiToken: ''
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════════════════
+
+const POS_COLORS = {
+  '감독':    '#3b82f6',
+  '배우':    '#10b981',
+  '프로듀서': '#f59e0b',
+  '촬영감독': '#8b5cf6',
+  '작가':    '#ef4444',
+  '편집자':  '#06b6d4',
+  '음악감독': '#f97316',
+  '미술감독': '#ec4899',
+  '조감독':  '#84cc16',
+  '기타':    '#6b7280'
 };
 
-let currentRange = 30;
-let visitorChartObj = null;
-let deviceChartObj = null;
+const c = (pos) => POS_COLORS[pos] || POS_COLORS['기타'];
+const ini = (name) => name ? name.charAt(0) : '?';
+const uid = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 
-function loadConfig() {
+function toast(msg, type = 'ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  setTimeout(() => el.className = 'toast', 2800);
+}
+
+// ════════════════════════════════════════════════════════
+//  SAMPLE DATA
+// ════════════════════════════════════════════════════════
+
+const SAMPLES = [
+  {
+    id: 's01', name: '김민준', position: '감독', company: '씨네마틱 필름',
+    email: 'minjun.kim@cinematic.kr', phone: '010-1234-5678',
+    university: '한국예술종합학교',
+    films: [
+      { title: '봄날의 기억', year: 2019, role: '감독' },
+      { title: '서울의 밤', year: 2021, role: '감독' },
+      { title: '마지막 여름', year: 2023, role: '감독' }
+    ],
+    notes: '부산국제영화제 신인감독상 수상. 독립영화 전문.'
+  },
+  {
+    id: 's02', name: '이서연', position: '배우', company: '스타엔터테인먼트',
+    email: 'seoyeon.lee@starent.kr', phone: '010-9876-5432',
+    university: '중앙대학교',
+    films: [
+      { title: '봄날의 기억', year: 2019, role: '주연' },
+      { title: '도시의 그림자', year: 2020, role: '주연' },
+      { title: '서울의 밤', year: 2021, role: '조연' }
+    ],
+    notes: '청룡영화상 여우주연상 수상.'
+  },
+  {
+    id: 's03', name: '박준혁', position: '촬영감독', company: '라이트캠 스튜디오',
+    email: 'junhyuk.park@lightcam.kr', phone: '010-5555-1234',
+    university: '한국예술종합학교',
+    films: [
+      { title: '봄날의 기억', year: 2019, role: '촬영감독' },
+      { title: '마지막 여름', year: 2023, role: '촬영감독' },
+      { title: '새벽의 노래', year: 2022, role: '촬영감독' }
+    ],
+    notes: '자연광 촬영 전문. 핸드헬드 기법 선호.'
+  },
+  {
+    id: 's04', name: '최유나', position: '작가', company: '작가 스튜디오',
+    email: 'yuna.choi@writerstudio.kr', phone: '010-3333-7890',
+    university: '연세대학교',
+    films: [
+      { title: '서울의 밤', year: 2021, role: '각본' },
+      { title: '도시의 그림자', year: 2020, role: '각본' },
+      { title: '빨간 우산', year: 2018, role: '각본' }
+    ],
+    notes: '대종상 각본상 수상. 사회 비판적 서사 전문.'
+  },
+  {
+    id: 's05', name: '정대현', position: '프로듀서', company: '메가 필름',
+    email: 'daehyun.jeong@megafilm.kr', phone: '010-7777-2222',
+    university: '연세대학교',
+    films: [
+      { title: '마지막 여름', year: 2023, role: '제작' },
+      { title: '새벽의 노래', year: 2022, role: '제작' },
+      { title: '두 도시 이야기', year: 2017, role: '제작' }
+    ],
+    notes: '상업·독립 영화 양쪽에서 활동. 해외 공동제작 경험.'
+  },
+  {
+    id: 's06', name: '한소미', position: '음악감독', company: '사운드웨이브',
+    email: 'somi.han@soundwave.kr', phone: '010-8888-4444',
+    university: '서울대학교',
+    films: [
+      { title: '도시의 그림자', year: 2020, role: '음악' },
+      { title: '새벽의 노래', year: 2022, role: '음악' },
+      { title: '마지막 여름', year: 2023, role: '음악' }
+    ],
+    notes: '오케스트라 편곡 전문. 한국 영화음악상 수상.'
+  },
+  {
+    id: 's07', name: '윤재원', position: '편집자', company: '컷프로 편집실',
+    email: 'jaewon.yoon@cutpro.kr', phone: '010-6666-3333',
+    university: '한국예술종합학교',
+    films: [
+      { title: '서울의 밤', year: 2021, role: '편집' },
+      { title: '빨간 우산', year: 2018, role: '편집' },
+      { title: '봄날의 기억', year: 2019, role: '편집' }
+    ],
+    notes: '몽타주 기법 전문. 김민준 감독 전담 편집자.'
+  },
+  {
+    id: 's08', name: '강민서', position: '배우', company: 'ACT365',
+    email: 'minseo.kang@act365.kr', phone: '010-4444-6666',
+    university: '중앙대학교',
+    films: [
+      { title: '마지막 여름', year: 2023, role: '주연' },
+      { title: '새벽의 노래', year: 2022, role: '주연' },
+      { title: '두 도시 이야기', year: 2017, role: '조연' }
+    ],
+    notes: '액션·드라마 장르 모두 소화. 격투기 특기.'
+  },
+  {
+    id: 's09', name: '오성진', position: '미술감독', company: '아트셋 코리아',
+    email: 'sungjin.oh@artset.kr', phone: '010-2222-9999',
+    university: '서울대학교',
+    films: [
+      { title: '빨간 우산', year: 2018, role: '미술감독' },
+      { title: '두 도시 이야기', year: 2017, role: '미술감독' },
+      { title: '도시의 그림자', year: 2020, role: '미술감독' }
+    ],
+    notes: '세트 디자인과 CG 합성 연계 작업 전문.'
+  },
+  {
+    id: 's10', name: '임지현', position: '조감독', company: '씨네마틱 필름',
+    email: 'jihyun.lim@cinematic.kr', phone: '010-1111-8888',
+    university: '한국예술종합학교',
+    films: [
+      { title: '봄날의 기억', year: 2019, role: '조감독' },
+      { title: '서울의 밤', year: 2021, role: '조감독' },
+      { title: '마지막 여름', year: 2023, role: '조감독' }
+    ],
+    notes: '김민준 감독 전담 조감독. 올해 장편 데뷔 준비 중.'
+  }
+];
+
+// ════════════════════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════════════════════
+
+let contacts = [];
+
+function loadData() {
   try {
-    const saved = localStorage.getItem('analytics_config');
-    if (saved) config = { ...config, ...JSON.parse(saved) };
-  } catch(e) {}
+    const raw = localStorage.getItem('filmnet_v2');
+    contacts = raw ? JSON.parse(raw) : SAMPLES.map(s => ({ ...s }));
+    if (!raw) saveData();
+  } catch (e) {
+    contacts = SAMPLES.map(s => ({ ...s }));
+  }
 }
 
-function saveConfig() {
-  config.provider = document.querySelector('.provider-tab.active')?.dataset.provider || 'demo';
-  config.gcSiteUrl = document.getElementById('gcSiteUrl').value.trim().replace(/\/$/, '');
-  config.gcApiToken = document.getElementById('gcApiToken').value.trim();
-
-  localStorage.setItem('analytics_config', JSON.stringify(config));
-  closeModal();
-  loadData();
+function saveData() {
+  localStorage.setItem('filmnet_v2', JSON.stringify(contacts));
 }
 
-// ═══════════════════════════════════════════════
-//  DEMO DATA
-// ═══════════════════════════════════════════════
+function computeEdges() {
+  const edges = [];
+  const n = contacts.length;
 
-function seededRandom(seed) {
-  let s = seed;
-  return function() {
-    s = (s * 1664525 + 1013904223) & 0xffffffff;
-    return (s >>> 0) / 0xffffffff;
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const a = contacts[i], b = contacts[j];
+
+      // Film connections
+      const aTitles = (a.films || []).map(f => f.title.trim().toLowerCase());
+      const bTitles = (b.films || []).map(f => f.title.trim().toLowerCase());
+      for (const t of aTitles) {
+        if (bTitles.includes(t)) {
+          const fa = (a.films || []).find(f => f.title.trim().toLowerCase() === t);
+          const fb = (b.films || []).find(f => f.title.trim().toLowerCase() === t);
+          edges.push({ source: a.id, target: b.id, type: 'film',
+            film: fa?.title || t, year: fa?.year, roleA: fa?.role, roleB: fb?.role });
+        }
+      }
+
+      // University connections
+      const ua = (a.university || '').trim();
+      const ub = (b.university || '').trim();
+      if (ua && ub && ua === ub) {
+        edges.push({ source: a.id, target: b.id, type: 'university', university: ua });
+      }
+    }
+  }
+
+  return edges;
+}
+
+// ════════════════════════════════════════════════════════
+//  UI STATE
+// ════════════════════════════════════════════════════════
+
+let currentView = 'contacts';
+let searchQ = '';
+let filterPos = '';
+let editId = null;
+let formFilms = [];
+let detailId = null;
+let graphReady = false;
+let gLinkSel = null, gNodeSel = null;
+let gSimulation = null, gZoom = null, gSvg = null, gGroup = null;
+let gShowFilm = true, gShowUniv = true;
+let gSelectedId = null;
+
+// ════════════════════════════════════════════════════════
+//  VIEW SWITCHING
+// ════════════════════════════════════════════════════════
+
+function showView(v) {
+  currentView = v;
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + v).classList.add('active');
+  if (v === 'graph') initOrUpdateGraph();
+}
+
+// ════════════════════════════════════════════════════════
+//  CONTACTS VIEW
+// ════════════════════════════════════════════════════════
+
+function onSearch(v) { searchQ = v.toLowerCase(); renderContacts(); }
+function onFilter(v) { filterPos = v; renderContacts(); }
+
+function filtered() {
+  return contacts.filter(c => {
+    if (filterPos && c.position !== filterPos) return false;
+    if (!searchQ) return true;
+    return c.name.toLowerCase().includes(searchQ) ||
+      (c.company || '').toLowerCase().includes(searchQ) ||
+      (c.university || '').toLowerCase().includes(searchQ) ||
+      (c.films || []).some(f => f.title.toLowerCase().includes(searchQ));
+  });
+}
+
+function renderContacts() {
+  const list = filtered();
+  const grid = document.getElementById('cGrid');
+  document.getElementById('cCount').textContent = list.length + '명의 연락처';
+
+  if (!list.length) {
+    grid.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">${contacts.length ? '🔍' : '🎬'}</div>
+        <div class="empty-title">${contacts.length ? '검색 결과가 없습니다' : '연락처가 없습니다'}</div>
+        <div class="empty-desc">${contacts.length ? '다른 검색어나 필터를 시도해보세요.' : '첫 번째 영화 업계 인맥을 추가해보세요.'}</div>
+        ${!contacts.length ? '<button class="btn btn-primary" onclick="openAdd()">＋ 연락처 추가</button>' : ''}
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(ct => {
+    const col = c(ct.position);
+    const fc = (ct.films || []).length;
+    return `
+      <div class="contact-card" onclick="openDetail('${ct.id}')"
+           style="--card-color:${col}">
+        <style>
+          .contact-card[style*="${col}"]::before { background: ${col}; }
+        </style>
+        <div class="card-top">
+          <div class="avatar" style="background:${col}">${ini(ct.name)}</div>
+          <div class="card-info">
+            <div class="card-name">${ct.name}</div>
+            <div class="card-pos">${ct.position || '직책 미입력'}</div>
+            <div class="card-co">${ct.company || ''}</div>
+          </div>
+          <div class="card-actions" onclick="event.stopPropagation()">
+            <button class="icon-btn" title="수정" onclick="openEdit('${ct.id}')">✏</button>
+            <button class="icon-btn del" title="삭제" onclick="delContact('${ct.id}')">✕</button>
+          </div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-bottom">
+          <span class="card-films">🎞 ${fc}편의 작품</span>
+          ${ct.university ? `<span class="card-univ">🎓 ${ct.university}</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+//  FORM MODAL
+// ════════════════════════════════════════════════════════
+
+function openAdd() {
+  editId = null;
+  formFilms = [];
+  document.getElementById('formTitle').textContent = '연락처 추가';
+  ['name','email','phone','company','univ','notes'].forEach(k =>
+    document.getElementById('f-' + k).value = '');
+  document.getElementById('f-pos').value = '';
+  switchFTab('basic');
+  renderFilmRows();
+  document.getElementById('formOverlay').classList.add('open');
+}
+
+function openEdit(id) {
+  const ct = contacts.find(x => x.id === id);
+  if (!ct) return;
+  editId = id;
+  formFilms = (ct.films || []).map(f => ({ ...f }));
+  document.getElementById('formTitle').textContent = '연락처 수정';
+  document.getElementById('f-name').value = ct.name || '';
+  document.getElementById('f-pos').value = ct.position || '';
+  document.getElementById('f-email').value = ct.email || '';
+  document.getElementById('f-phone').value = ct.phone || '';
+  document.getElementById('f-company').value = ct.company || '';
+  document.getElementById('f-univ').value = ct.university || '';
+  document.getElementById('f-notes').value = ct.notes || '';
+  switchFTab('basic');
+  renderFilmRows();
+  document.getElementById('formOverlay').classList.add('open');
+}
+
+function closeForm() { document.getElementById('formOverlay').classList.remove('open'); }
+function closeFormBg(e) { if (e.target === document.getElementById('formOverlay')) closeForm(); }
+
+function switchFTab(tab) {
+  document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('ftab-' + tab).classList.add('active');
+  document.getElementById('fpane-' + tab).classList.add('active');
+}
+
+function addFilmRow() {
+  formFilms.push({ title: '', year: new Date().getFullYear(), role: '' });
+  renderFilmRows();
+}
+
+function delFilmRow(i) {
+  formFilms.splice(i, 1);
+  renderFilmRows();
+}
+
+function renderFilmRows() {
+  const el = document.getElementById('filmRows');
+  if (!formFilms.length) {
+    el.innerHTML = '<div class="films-empty">아직 작품이 없습니다. 아래 버튼으로 추가하세요.</div>';
+    return;
+  }
+  el.innerHTML = formFilms.map((f, i) => `
+    <div class="film-row">
+      <input class="fi" placeholder="영화 제목" value="${escHtml(f.title || '')}"
+        oninput="formFilms[${i}].title = this.value">
+      <input class="fi" placeholder="연도" type="number" value="${f.year || ''}"
+        min="1900" max="2099" style="text-align:center"
+        oninput="formFilms[${i}].year = parseInt(this.value)||0">
+      <input class="fi" placeholder="역할 (예: 감독, 주연)" value="${escHtml(f.role || '')}"
+        oninput="formFilms[${i}].role = this.value">
+      <button class="film-row-del" onclick="delFilmRow(${i})">✕</button>
+    </div>`).join('');
+}
+
+function saveContact() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) {
+    toast('이름을 입력해주세요.', 'err');
+    switchFTab('basic');
+    document.getElementById('f-name').focus();
+    return;
+  }
+
+  const films = formFilms.filter(f => f.title?.trim());
+  const data = {
+    name,
+    position: document.getElementById('f-pos').value,
+    email: document.getElementById('f-email').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    company: document.getElementById('f-company').value.trim(),
+    university: document.getElementById('f-univ').value.trim(),
+    notes: document.getElementById('f-notes').value.trim(),
+    films
   };
+
+  if (editId) {
+    const idx = contacts.findIndex(x => x.id === editId);
+    if (idx >= 0) contacts[idx] = { ...contacts[idx], ...data };
+    toast('연락처가 수정되었습니다.');
+  } else {
+    contacts.push({ id: uid(), ...data });
+    toast('연락처가 추가되었습니다.');
+  }
+
+  saveData();
+  closeForm();
+  renderContacts();
+  if (currentView === 'graph') initOrUpdateGraph();
 }
 
-function generateDemoData(days) {
-  const rng = seededRandom(42 + days);
-  const data = [];
-  const now = new Date();
+// ════════════════════════════════════════════════════════
+//  DETAIL MODAL
+// ════════════════════════════════════════════════════════
 
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - i);
-    const dow = d.getDay();
-    const isWeekend = dow === 0 || dow === 6;
-    const base = isWeekend ? 55 : 130;
-    const trend = 1 + (days - i) / (days * 8); // slight growth trend
-    const noise = 0.8 + rng() * 0.4;
-    const visits = Math.round(base * trend * noise);
-    data.push({
-      date: d.toISOString().split('T')[0],
-      visits,
-      unique: Math.round(visits * (0.65 + rng() * 0.1)),
-      pageviews: Math.round(visits * (1.8 + rng() * 0.8))
+function openDetail(id) {
+  const ct = contacts.find(x => x.id === id);
+  if (!ct) return;
+  detailId = id;
+
+  const col = c(ct.position);
+  const edges = computeEdges();
+  const myEdges = edges.filter(e => e.source === id || e.target === id);
+
+  // Group connections by contact
+  const connMap = {};
+  for (const e of myEdges) {
+    const oid = e.source === id ? e.target : e.source;
+    if (!connMap[oid]) connMap[oid] = { films: [], univs: [] };
+    if (e.type === 'film') connMap[oid].films.push(e.film);
+    else connMap[oid].univs.push(e.university);
+  }
+
+  const connList = Object.entries(connMap)
+    .map(([cid, info]) => ({ ct: contacts.find(x => x.id === cid), info }))
+    .filter(x => x.ct);
+
+  const films = (ct.films || []).slice().sort((a, b) => (b.year || 0) - (a.year || 0));
+
+  let html = `
+    <div class="detail-hero">
+      <div class="detail-av" style="background:${col}">${ini(ct.name)}</div>
+      <div>
+        <div class="detail-name">${ct.name}</div>
+        <div class="detail-pos">${ct.position || '직책 미입력'}</div>
+        <div class="detail-co">${ct.company || ''}</div>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      ${ct.email ? `<div><div class="dg-label">이메일</div><div class="dg-value">${ct.email}</div></div>` : ''}
+      ${ct.phone ? `<div><div class="dg-label">전화번호</div><div class="dg-value">${ct.phone}</div></div>` : ''}
+      ${ct.university ? `<div><div class="dg-label">출신 대학교</div><div class="dg-value">🎓 ${ct.university}</div></div>` : ''}
+      ${ct.notes ? `<div style="grid-column:1/-1"><div class="dg-label">메모</div><div class="dg-value" style="color:var(--text-muted)">${ct.notes}</div></div>` : ''}
+    </div>`;
+
+  if (films.length) {
+    html += `
+      <div class="sec-label">필모그래피 (${films.length}편)</div>
+      <div class="filmography">
+        ${films.map(f => `
+          <div class="film-entry">
+            <div class="film-yr">${f.year || '–'}</div>
+            <div class="film-ttl">${f.title}</div>
+            <div class="film-role">${f.role}</div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  if (connList.length) {
+    html += `
+      <div class="sec-label">연결된 인맥 (${connList.length}명)</div>
+      <div class="conns-grid">
+        ${connList.map(({ ct: other, info }) => `
+          <div class="conn-card" onclick="closeDetail(); openDetail('${other.id}')">
+            <div class="conn-card-top">
+              <div class="cc-av" style="background:${c(other.position)}">${ini(other.name)}</div>
+              <div class="cc-name">${other.name}</div>
+            </div>
+            <div class="cc-badges">
+              ${[...new Set(info.films)].slice(0, 2).map(f =>
+                `<span class="badge badge-film">🎞 ${f}</span>`).join('')}
+              ${info.univs.length ? `<span class="badge badge-univ">🎓 동문</span>` : ''}
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } else {
+    html += `<div style="text-align:center;padding:16px;color:var(--text-dim);font-size:13px">아직 연결된 인맥이 없습니다</div>`;
+  }
+
+  document.getElementById('detailBody').innerHTML = html;
+  document.getElementById('detEditBtn').onclick = () => { closeDetail(); openEdit(id); };
+  document.getElementById('detDelBtn').onclick = () => { delContact(id); closeDetail(); };
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeDetail() { document.getElementById('detailOverlay').classList.remove('open'); }
+function closeDetailBg(e) { if (e.target === document.getElementById('detailOverlay')) closeDetail(); }
+
+// ════════════════════════════════════════════════════════
+//  DELETE
+// ════════════════════════════════════════════════════════
+
+function delContact(id) {
+  if (!confirm('이 연락처를 삭제하시겠습니까?')) return;
+  contacts = contacts.filter(x => x.id !== id);
+  saveData();
+  renderContacts();
+  if (currentView === 'graph') initOrUpdateGraph();
+  toast('연락처가 삭제되었습니다.');
+}
+
+// ════════════════════════════════════════════════════════
+//  GRAPH
+// ════════════════════════════════════════════════════════
+
+function onEdgeToggle() {
+  gShowFilm = document.getElementById('togFilm').checked;
+  gShowUniv = document.getElementById('togUniv').checked;
+  initOrUpdateGraph();
+}
+
+function initOrUpdateGraph() {
+  const svgEl = document.getElementById('graph-svg');
+  const W = svgEl.clientWidth || 900;
+  const H = svgEl.clientHeight || 600;
+
+  // Build data
+  const allEdges = computeEdges();
+  const filmEdges = allEdges.filter(e => e.type === 'film');
+  const univEdges = allEdges.filter(e => e.type === 'university');
+
+  // Update stats
+  document.getElementById('gStatNodes').textContent = contacts.length;
+  document.getElementById('gStatFilm').textContent = filmEdges.length;
+  document.getElementById('gStatUniv').textContent = univEdges.length;
+
+  // Active edges
+  let activeEdges = [];
+  if (gShowFilm) {
+    // Deduplicate film edges by pair (keep first occurrence per pair)
+    const seen = new Set();
+    for (const e of filmEdges) {
+      const key = [e.source, e.target].sort().join('|');
+      if (!seen.has(key)) { seen.add(key); activeEdges.push(e); }
+    }
+  }
+  if (gShowUniv) activeEdges = activeEdges.concat(univEdges);
+
+  const nodes = contacts.map(ct => ({ ...ct }));
+
+  if (gSimulation) gSimulation.stop();
+
+  const svg = d3.select('#graph-svg');
+  svg.selectAll('*').remove();
+  gSvg = svg;
+
+  gZoom = d3.zoom().scaleExtent([0.15, 4]).on('zoom', e => {
+    gGroup.attr('transform', e.transform);
+  });
+  svg.call(gZoom);
+  svg.on('click', () => deselect());
+
+  gGroup = svg.append('g');
+
+  // Defs: gradients for film edges
+  const defs = svg.append('defs');
+  defs.append('filter').attr('id', 'glow')
+    .append('feGaussianBlur').attr('stdDeviation', '4').attr('result', 'blur');
+
+  // Links
+  const linkG = gGroup.append('g').attr('class', 'link-layer');
+  gLinkSel = linkG.selectAll('line')
+    .data(activeEdges)
+    .join('line')
+    .attr('class', 'link-line')
+    .attr('stroke', e => e.type === 'film' ? '#3b82f6' : '#f59e0b')
+    .attr('stroke-width', e => e.type === 'film' ? 2 : 1.5)
+    .attr('stroke-opacity', 0.5)
+    .attr('stroke-dasharray', e => e.type === 'university' ? '6,4' : null)
+    .on('mouseenter', function(event, d) {
+      d3.select(this).attr('stroke-opacity', 1);
+      showTip(event,
+        d.type === 'film'
+          ? `🎞 ${d.film} (${d.year || ''})`
+          : `🎓 ${d.university} 동문`,
+        getContactName(d.source) + ' ↔ ' + getContactName(d.target));
+    })
+    .on('mouseleave', function() {
+      d3.select(this).attr('stroke-opacity', gSelectedId ? 0.15 : 0.5);
+      hideTip();
     });
+
+  // Node groups
+  const nodeG = gGroup.append('g').attr('class', 'node-layer');
+  gNodeSel = nodeG.selectAll('g')
+    .data(nodes)
+    .join('g')
+    .attr('class', 'node')
+    .call(d3.drag()
+      .on('start', (ev, d) => {
+        if (!ev.active) gSimulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+      })
+      .on('drag', (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
+      .on('end', (ev, d) => {
+        if (!ev.active) gSimulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
+      }))
+    .on('click', (ev, d) => {
+      ev.stopPropagation();
+      if (gSelectedId === d.id) deselect();
+      else selectNode(d.id);
+    })
+    .on('mouseenter', (ev, d) => {
+      showTip(ev, d.name, [d.position, d.company].filter(Boolean).join(' · '));
+    })
+    .on('mouseleave', () => hideTip());
+
+  // Outer glow ring
+  gNodeSel.append('circle')
+    .attr('r', 28)
+    .attr('fill', 'none')
+    .attr('stroke', d => c(d.position))
+    .attr('stroke-width', 8)
+    .attr('stroke-opacity', 0.12)
+    .attr('class', 'glow-ring');
+
+  // Main circle
+  gNodeSel.append('circle')
+    .attr('r', 21)
+    .attr('fill', d => c(d.position))
+    .attr('fill-opacity', 0.9)
+    .attr('stroke', d => c(d.position))
+    .attr('stroke-width', 2.5)
+    .attr('stroke-opacity', 0.6);
+
+  // Initials
+  gNodeSel.append('text')
+    .attr('class', 'node-initials')
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'central')
+    .text(d => ini(d.name));
+
+  // Name label
+  gNodeSel.append('text')
+    .attr('class', 'node-label')
+    .attr('text-anchor', 'middle')
+    .attr('dy', 35)
+    .text(d => d.name);
+
+  // Simulation
+  gSimulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(activeEdges).id(d => d.id).distance(d => d.type === 'film' ? 130 : 160).strength(0.6))
+    .force('charge', d3.forceManyBody().strength(-380))
+    .force('center', d3.forceCenter(W / 2, H / 2))
+    .force('collision', d3.forceCollide(50))
+    .on('tick', () => {
+      gLinkSel
+        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+      gNodeSel.attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+
+  // Restore selection
+  if (gSelectedId && contacts.find(x => x.id === gSelectedId)) {
+    selectNode(gSelectedId);
   }
-  return data;
+
+  graphReady = true;
+  buildLegend();
 }
 
-const DEMO_PAGES = [
-  { path: '/', label: 'Startseite',        visits: 3240 },
-  { path: '/about',     label: '/about',         visits: 1180 },
-  { path: '/portfolio', label: '/portfolio',      visits:  940 },
-  { path: '/contact',   label: '/contact',        visits:  720 },
-  { path: '/blog',      label: '/blog',           visits:  610 },
-  { path: '/services',  label: '/services',       visits:  490 },
-  { path: '/blog/post-1', label: '/blog/post-1',  visits:  310 },
-  { path: '/gallery',   label: '/gallery',        visits:  250 },
-];
-
-const DEMO_COUNTRIES = [
-  { flag: '🇰🇷', name: 'Südkorea',   pct: 68 },
-  { flag: '🇺🇸', name: 'USA',         pct: 10 },
-  { flag: '🇩🇪', name: 'Deutschland', pct:  6 },
-  { flag: '🇯🇵', name: 'Japan',       pct:  5 },
-  { flag: '🇨🇳', name: 'China',       pct:  4 },
-  { flag: '🇬🇧', name: 'Großbrit.',   pct:  3 },
-  { flag: '🌐', name: 'Sonstige',    pct:  4 },
-];
-
-const DEMO_REFERRERS = [
-  { name: 'Direkt',        visits: 1820 },
-  { name: 'Google',        visits: 1340 },
-  { name: 'Naver',         visits:  880 },
-  { name: 'instagram.com', visits:  420 },
-  { name: 'twitter.com',   visits:  190 },
-  { name: 'linkedin.com',  visits:  140 },
-];
-
-// ═══════════════════════════════════════════════
-//  GOATCOUNTER API
-// ═══════════════════════════════════════════════
-
-async function fetchGoatCounter(path, params = {}) {
-  const url = new URL(config.gcSiteUrl + '/api/v0/' + path);
-  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
-
-  const headers = { 'Content-Type': 'application/json' };
-  if (config.gcApiToken) headers['Authorization'] = 'Bearer ' + config.gcApiToken;
-
-  const res = await fetch(url.toString(), { headers });
-  if (!res.ok) throw new Error('GoatCounter API Fehler: ' + res.status);
-  return res.json();
+function getContactName(idOrObj) {
+  const id = typeof idOrObj === 'object' ? idOrObj.id : idOrObj;
+  return contacts.find(x => x.id === id)?.name || '';
 }
 
-function dateRange(days) {
-  const end = new Date();
-  const start = new Date();
-  start.setDate(start.getDate() - days);
-  return {
-    start: start.toISOString().split('T')[0],
-    end: end.toISOString().split('T')[0]
-  };
+function selectNode(id) {
+  gSelectedId = id;
+  if (!gLinkSel || !gNodeSel) return;
+
+  // Find connected nodes
+  const connectedIds = new Set([id]);
+  gLinkSel.each(function(d) {
+    const src = typeof d.source === 'object' ? d.source.id : d.source;
+    const tgt = typeof d.target === 'object' ? d.target.id : d.target;
+    if (src === id) connectedIds.add(tgt);
+    if (tgt === id) connectedIds.add(src);
+  });
+
+  // Dim non-connected
+  gNodeSel
+    .classed('dimmed', d => !connectedIds.has(d.id))
+    .select('circle:nth-child(2)')
+    .attr('stroke-width', d => d.id === id ? 4 : 2.5)
+    .attr('stroke-opacity', d => d.id === id ? 1 : 0.6);
+
+  gNodeSel.select('.glow-ring')
+    .attr('stroke-opacity', d => d.id === id ? 0.45 : (connectedIds.has(d.id) ? 0.12 : 0.04));
+
+  gLinkSel
+    .attr('stroke-opacity', function(d) {
+      const src = typeof d.source === 'object' ? d.source.id : d.source;
+      const tgt = typeof d.target === 'object' ? d.target.id : d.target;
+      return (src === id || tgt === id) ? 0.9 : 0.06;
+    });
+
+  renderPanel(id);
 }
 
-async function loadGoatCounterData(days) {
-  const { start, end } = dateRange(days);
+function deselect() {
+  gSelectedId = null;
+  if (!gLinkSel || !gNodeSel) return;
 
-  const [hitsData] = await Promise.all([
-    fetchGoatCounter('stats/hits', { start, end, daily: true })
-  ]);
+  gNodeSel.classed('dimmed', false);
+  gNodeSel.select('circle:nth-child(2)').attr('stroke-width', 2.5).attr('stroke-opacity', 0.6);
+  gNodeSel.select('.glow-ring').attr('stroke-opacity', 0.12);
+  gLinkSel.attr('stroke-opacity', 0.5);
 
-  // Normalize hits to our format
-  const timeSeries = (hitsData.hits || []).map(h => ({
-    date: h.day,
-    visits: h.count,
-    unique: h.count_unique,
-    pageviews: h.count
-  }));
-
-  return { timeSeries };
+  document.getElementById('graphPanel').classList.remove('open');
 }
 
-// ═══════════════════════════════════════════════
-//  RENDER
-// ═══════════════════════════════════════════════
+function renderPanel(id) {
+  const ct = contacts.find(x => x.id === id);
+  if (!ct) return;
 
-function fmt(n) {
-  return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
-}
+  const col = c(ct.position);
+  const edges = computeEdges();
+  const myEdges = edges.filter(e => e.source === id || e.target === id);
 
-function pct(a, b) {
-  if (!b) return '+0%';
-  const d = ((a - b) / b * 100).toFixed(1);
-  return (d >= 0 ? '+' : '') + d + '%';
-}
-
-function renderStats(data) {
-  const total = data.reduce((s, d) => s + d.visits, 0);
-  const unique = data.reduce((s, d) => s + d.unique, 0);
-  const pv     = data.reduce((s, d) => s + d.pageviews, 0);
-  const ppv    = total > 0 ? (pv / total).toFixed(2) : '–';
-
-  const half = Math.floor(data.length / 2);
-  const cur  = data.slice(half).reduce((s, d) => s + d.visits, 0);
-  const prev = data.slice(0, half).reduce((s, d) => s + d.visits, 0);
-  const delta = pct(cur, prev);
-  const dir   = cur >= prev ? 'up' : 'down';
-  const arrow = cur >= prev ? '↑' : '↓';
-
-  document.getElementById('totalVisits').textContent   = fmt(total);
-  document.getElementById('uniqueVisits').textContent  = fmt(unique);
-  document.getElementById('pageviews').textContent     = fmt(pv);
-  document.getElementById('pagesPerVisit').textContent = ppv;
-
-  for (const id of ['totalChange','uniqueChange','pageviewChange','pagesChange']) {
-    document.getElementById(id).innerHTML =
-      `<span>${arrow} ${delta}</span><span style="color:var(--text-muted);margin-left:4px">vs. Vorperiode</span>`;
-    document.getElementById(id).className = 'stat-change ' + dir;
+  const connMap = {};
+  for (const e of myEdges) {
+    const oid = e.source === id ? e.target : e.source;
+    if (!connMap[oid]) connMap[oid] = { films: [], univs: [] };
+    if (e.type === 'film') connMap[oid].films.push(e.film);
+    else connMap[oid].univs.push(e.university);
   }
-}
+  const connList = Object.entries(connMap)
+    .map(([cid, info]) => ({ ct: contacts.find(x => x.id === cid), info }))
+    .filter(x => x.ct);
 
-function renderChart(data) {
-  const labels = data.map(d => {
-    const dt = new Date(d.date);
-    return dt.toLocaleDateString('de-DE', { month: 'short', day: 'numeric' });
-  });
+  const films = (ct.films || []).slice().sort((a, b) => (b.year || 0) - (a.year || 0));
 
-  const showEvery = Math.ceil(data.length / 12);
-  const filteredLabels = labels.map((l, i) => i % showEvery === 0 ? l : '');
+  let html = `
+    <div class="panel-close-row">
+      <div class="panel-header-title">연락처 정보</div>
+      <button class="icon-btn" onclick="deselect()" style="font-size:14px">✕</button>
+    </div>
 
-  if (visitorChartObj) visitorChartObj.destroy();
+    <div class="panel-avatar" style="background:${col}">${ini(ct.name)}</div>
+    <div class="panel-name">${ct.name}</div>
+    <div class="panel-sub">${[ct.position, ct.company].filter(Boolean).join(' · ')}</div>
 
-  const ctx = document.getElementById('visitorChart').getContext('2d');
+    <div class="panel-section">
+      ${ct.email ? `<div class="panel-meta-row"><span class="panel-meta-icon">✉</span>${ct.email}</div>` : ''}
+      ${ct.phone ? `<div class="panel-meta-row"><span class="panel-meta-icon">📞</span>${ct.phone}</div>` : ''}
+      ${ct.university ? `<div class="panel-meta-row"><span class="panel-meta-icon">🎓</span>${ct.university}</div>` : ''}
+    </div>`;
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 260);
-  gradient.addColorStop(0, 'rgba(59,130,246,0.25)');
-  gradient.addColorStop(1, 'rgba(59,130,246,0.0)');
-
-  visitorChartObj = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        {
-          label: 'Besucher',
-          data: data.map(d => d.visits),
-          borderColor: '#3b82f6',
-          backgroundColor: gradient,
-          fill: true,
-          tension: 0.3,
-          pointRadius: data.length > 30 ? 0 : 3,
-          pointHoverRadius: 5,
-          borderWidth: 2
-        },
-        {
-          label: 'Einmalig',
-          data: data.map(d => d.unique),
-          borderColor: '#10b981',
-          backgroundColor: 'transparent',
-          fill: false,
-          tension: 0.3,
-          pointRadius: data.length > 30 ? 0 : 3,
-          pointHoverRadius: 5,
-          borderWidth: 2,
-          borderDash: [4, 3]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#1e293b',
-          borderColor: '#334155',
-          borderWidth: 1,
-          titleColor: '#f1f5f9',
-          bodyColor: '#94a3b8',
-          padding: 10
-        }
-      },
-      scales: {
-        x: {
-          grid: { color: 'rgba(51,65,85,0.4)', drawBorder: false },
-          ticks: {
-            color: '#64748b',
-            font: { size: 11 },
-            callback: (_, i) => filteredLabels[i]
-          }
-        },
-        y: {
-          grid: { color: 'rgba(51,65,85,0.4)', drawBorder: false },
-          ticks: { color: '#64748b', font: { size: 11 } },
-          beginAtZero: true
-        }
-      }
-    }
-  });
-}
-
-function renderTopPages(pages, totalVisits) {
-  const max = Math.max(...pages.map(p => p.visits));
-  const tbody = document.getElementById('topPagesBody');
-  tbody.innerHTML = pages.slice(0, 8).map(p => `
-    <tr>
-      <td>
-        <span class="page-path">${p.path || p.label}</span>
-      </td>
-      <td>
-        <div class="bar-inline">
-          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(p.visits/max*100)}%"></div></div>
-          <span style="white-space:nowrap;font-size:13px">${fmt(p.visits)}</span>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function renderCountries(countries) {
-  const tbody = document.getElementById('countriesBody');
-  tbody.innerHTML = countries.map(c => `
-    <tr>
-      <td><span class="flag">${c.flag}</span>${c.name}</td>
-      <td>
-        <div class="bar-inline">
-          <div class="bar-track"><div class="bar-fill" style="width:${c.pct}%;background:var(--purple)"></div></div>
-          <span>${c.pct}%</span>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function renderReferrers(refs) {
-  const max = Math.max(...refs.map(r => r.visits));
-  document.getElementById('referrersBody').innerHTML = refs.map(r => `
-    <tr>
-      <td>${r.name}</td>
-      <td>
-        <div class="bar-inline">
-          <div class="bar-track"><div class="bar-fill" style="width:${Math.round(r.visits/max*100)}%;background:var(--yellow)"></div></div>
-          <span>${fmt(r.visits)}</span>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function renderDeviceChart(data) {
-  if (deviceChartObj) deviceChartObj.destroy();
-  const ctx = document.getElementById('deviceChart').getContext('2d');
-  deviceChartObj = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: data.labels,
-      datasets: [{
-        data: data.values,
-        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
-        borderColor: '#1e293b',
-        borderWidth: 3
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'right',
-          labels: {
-            color: '#94a3b8',
-            font: { size: 12 },
-            padding: 12,
-            boxWidth: 12,
-            boxHeight: 12
-          }
-        },
-        tooltip: {
-          backgroundColor: '#1e293b',
-          borderColor: '#334155',
-          borderWidth: 1,
-          titleColor: '#f1f5f9',
-          bodyColor: '#94a3b8'
-        }
-      }
-    }
-  });
-}
-
-// ═══════════════════════════════════════════════
-//  LOAD DATA
-// ═══════════════════════════════════════════════
-
-async function loadData() {
-  const btn = document.getElementById('refreshBtn');
-  btn.innerHTML = '<span class="loading-spinner"></span> Lädt';
-  btn.disabled = true;
-
-  try {
-    let timeSeries, pages, countries, referrers, devices;
-
-    if (config.provider === 'goatcounter' && config.gcSiteUrl) {
-      // Live GoatCounter data
-      try {
-        const result = await loadGoatCounterData(currentRange);
-        timeSeries = result.timeSeries;
-        pages      = DEMO_PAGES;   // fallback for pages/countries in free tier
-        countries  = DEMO_COUNTRIES;
-        referrers  = DEMO_REFERRERS;
-        devices    = { labels: ['Desktop', 'Mobil', 'Tablet'], values: [54, 38, 8] };
-
-        document.getElementById('modeBadge').textContent = 'Live';
-        document.getElementById('modeBadge').className = 'demo-badge live';
-        document.getElementById('setupBanner').style.display = 'none';
-        document.getElementById('footerMode').textContent = 'Live-Daten via GoatCounter';
-      } catch(err) {
-        console.error('GoatCounter Fehler:', err);
-        alert('Fehler beim Laden der GoatCounter-Daten: ' + err.message);
-        timeSeries = generateDemoData(currentRange);
-        pages      = DEMO_PAGES;
-        countries  = DEMO_COUNTRIES;
-        referrers  = DEMO_REFERRERS;
-        devices    = { labels: ['Desktop', 'Mobil', 'Tablet'], values: [54, 38, 8] };
-      }
-    } else {
-      // Demo mode
-      timeSeries = generateDemoData(currentRange);
-      pages      = DEMO_PAGES;
-      countries  = DEMO_COUNTRIES;
-      referrers  = DEMO_REFERRERS;
-      devices    = { labels: ['Desktop', 'Mobil', 'Tablet'], values: [54, 38, 8] };
-    }
-
-    // Scale demo data to selected range
-    const scaleFactor = currentRange / 365;
-    const scaledPages = pages.map(p => ({
-      ...p, visits: Math.round(p.visits * scaleFactor * (0.8 + Math.random() * 0.4))
-    }));
-    const scaledRefs = referrers.map(r => ({
-      ...r, visits: Math.round(r.visits * scaleFactor * (0.8 + Math.random() * 0.4))
-    }));
-
-    renderStats(timeSeries);
-    renderChart(timeSeries);
-    renderTopPages(scaledPages);
-    renderCountries(countries);
-    renderReferrers(scaledRefs);
-    renderDeviceChart(devices);
-
-    // Realtime (simulated)
-    document.getElementById('realtimeCount').textContent = Math.floor(2 + Math.random() * 12);
-
-    document.getElementById('lastUpdated').textContent =
-      'Aktualisiert: ' + new Date().toLocaleTimeString('de-DE');
-
-  } finally {
-    btn.innerHTML = '↻ Aktualisieren';
-    btn.disabled = false;
+  if (films.length) {
+    html += `
+      <div class="panel-section">
+        <div class="sec-title">필모그래피 (${films.length}편)</div>
+        ${films.slice(0, 5).map(f => `
+          <div class="p-film-item">
+            <div class="p-film-title">${f.title}</div>
+            <div class="p-film-meta">${f.year || '–'} · ${f.role}</div>
+          </div>`).join('')}
+        ${films.length > 5 ? `<div style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:4px">외 ${films.length - 5}편</div>` : ''}
+      </div>`;
   }
+
+  if (connList.length) {
+    html += `
+      <div class="panel-section">
+        <div class="sec-title">연결된 인맥 (${connList.length}명)</div>
+        ${connList.map(({ ct: other, info }) => `
+          <div class="p-conn-item" onclick="selectNode('${other.id}')">
+            <div class="p-conn-av" style="background:${c(other.position)}">${ini(other.name)}</div>
+            <div class="p-conn-info">
+              <div class="p-conn-name">${other.name}</div>
+              <div class="p-conn-pos">${other.position || ''}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end">
+              ${info.films.length ? `<span class="badge badge-film">영화</span>` : ''}
+              ${info.univs.length ? `<span class="badge badge-univ">동문</span>` : ''}
+            </div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  html += `
+    <div style="margin-top:8px">
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="openDetail('${id}')">
+        상세 정보 보기
+      </button>
+    </div>`;
+
+  document.getElementById('panelScroll').innerHTML = html;
+  document.getElementById('graphPanel').classList.add('open');
 }
 
-// ═══════════════════════════════════════════════
-//  UI HELPERS
-// ═══════════════════════════════════════════════
+function resetZoom() {
+  if (!gSvg || !gZoom) return;
+  gSvg.transition().duration(500).call(gZoom.transform, d3.zoomIdentity);
+}
 
-document.querySelectorAll('.range-tab').forEach(tab => {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.range-tab').forEach(t => t.classList.remove('active'));
-    this.classList.add('active');
-    currentRange = parseInt(this.dataset.range, 10);
-    document.getElementById('chartSubtitle').textContent =
-      'Tägliche Besucher – letzten ' + currentRange + ' Tage';
-    loadData();
-  });
+function buildLegend() {
+  document.getElementById('graphLegend').innerHTML =
+    Object.entries(POS_COLORS).map(([pos, col]) => `
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${col}"></div>
+        ${pos}
+      </div>`).join('');
+}
+
+function showTip(event, name, detail) {
+  const tip = document.getElementById('gTip');
+  document.getElementById('gTipName').textContent = name;
+  document.getElementById('gTipSub').textContent = detail || '';
+  tip.style.left = (event.clientX + 14) + 'px';
+  tip.style.top = (event.clientY - 14) + 'px';
+  tip.classList.add('show');
+}
+
+function hideTip() {
+  document.getElementById('gTip').classList.remove('show');
+}
+
+// Resize handler
+window.addEventListener('resize', () => {
+  if (currentView === 'graph' && graphReady) initOrUpdateGraph();
 });
 
-function openModal() {
-  document.getElementById('gcSiteUrl').value  = config.gcSiteUrl;
-  document.getElementById('gcApiToken').value = config.gcApiToken;
-  selectProvider(config.provider);
-  document.getElementById('modalOverlay').classList.add('open');
+// ════════════════════════════════════════════════════════
+//  UTIL
+// ════════════════════════════════════════════════════════
+
+function escHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-
-function closeModalIfBg(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-
-function selectProvider(provider, btn) {
-  document.querySelectorAll('.provider-tab').forEach(t => {
-    t.classList.remove('active');
-    t.dataset.provider = t.textContent.toLowerCase().replace(/[- ]/g, '');
-  });
-
-  // Fix provider tab dataset
-  document.querySelectorAll('.provider-tab').forEach(t => {
-    if (t.textContent.includes('GoatCounter')) t.dataset.provider = 'goatcounter';
-    if (t.textContent.includes('Demo'))        t.dataset.provider = 'demo';
-    if (t.dataset.provider === provider)       t.classList.add('active');
-  });
-
-  document.getElementById('goatcounterFields').style.display =
-    provider === 'goatcounter' ? 'block' : 'none';
-  document.getElementById('demoFields').style.display =
-    provider === 'demo' ? 'block' : 'none';
-}
-
-// Auto-refresh every 5 minutes
-setInterval(loadData, 5 * 60 * 1000);
-
-// Animate realtime counter
-setInterval(() => {
-  const el = document.getElementById('realtimeCount');
-  if (el.textContent !== '–') {
-    const cur = parseInt(el.textContent, 10) || 5;
-    el.textContent = Math.max(1, cur + Math.round(Math.random() * 3 - 1));
-  }
-}, 8000);
-
-// ═══════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 //  INIT
-// ═══════════════════════════════════════════════
-loadConfig();
+// ════════════════════════════════════════════════════════
+
 loadData();
+renderContacts();
 </script>
 </body>
 </html>
