@@ -1,0 +1,143 @@
+name: 예측 제출 처리
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  process-tip:
+    if: contains(github.event.issue.labels.*.name, 'tip-submission')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse issue and update tips.json
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = context.payload.issue.body || '';
+
+            function extractField(label) {
+              const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const re = new RegExp(`### ${escaped}\\s*\\n+([\\s\\S]*?)(\\n### |$)`);
+              const m = body.match(re);
+              return m ? m[1].trim() : '';
+            }
+
+            let nickname = extractField('닉네임');
+            let predictionsRaw = extractField('예측 데이터 \\(수정하지 마세요\\)');
+
+            predictionsRaw = predictionsRaw
+              .replace(/^```(?:json)?\n?/, '')
+              .replace(/\n?```$/, '')
+              .trim();
+
+            if (!nickname) {
+              core.setOutput('success', 'false');
+              core.setOutput('message', '닉네임이 비어 있습니다.');
+              return;
+            }
+
+            let predictions;
+            try {
+              predictions = JSON.parse(predictionsRaw);
+            } catch (e) {
+              core.setOutput('success', 'false');
+              core.setOutput('message', `예측 데이터 JSON 파싱에 실패했습니다: ${e.message}`);
+              return;
+            }
+
+            if (!predictions || typeof predictions !== 'object' || Array.isArray(predictions)) {
+              core.setOutput('success', 'false');
+              core.setOutput('message', '예측 데이터 형식이 올바르지 않습니다.');
+              return;
+            }
+
+            const matches = JSON.parse(fs.readFileSync('data/matches.json', 'utf8')).matches;
+            const matchIds = new Set(matches.map(m => String(m.id)));
+
+            const cleanPredictions = {};
+            for (const [mid, pred] of Object.entries(predictions)) {
+              if (!matchIds.has(String(mid))) continue;
+              if (!pred || typeof pred !== 'object') continue;
+              const home = Number(pred.home);
+              const away = Number(pred.away);
+              if (!Number.isInteger(home) || !Number.isInteger(away)) continue;
+              if (home < 0 || away < 0 || home > 30 || away > 30) continue;
+              cleanPredictions[mid] = { home, away };
+            }
+
+            if (Object.keys(cleanPredictions).length === 0) {
+              core.setOutput('success', 'false');
+              core.setOutput('message', '유효한 예측 데이터가 없습니다.');
+              return;
+            }
+
+            const tipsPath = 'data/tips.json';
+            const tipsData = JSON.parse(fs.readFileSync(tipsPath, 'utf8'));
+            tipsData.users = tipsData.users || {};
+
+            const username = context.payload.issue.user.login;
+            tipsData.users[username] = {
+              displayName: nickname.slice(0, 30).trim(),
+              githubUser: username,
+              submittedAt: new Date().toISOString(),
+              predictions: cleanPredictions
+            };
+
+            fs.writeFileSync(tipsPath, JSON.stringify(tipsData, null, 2) + '\n');
+
+            core.setOutput('success', 'true');
+            core.setOutput('count', String(Object.keys(cleanPredictions).length));
+
+      - name: Commit and push
+        if: steps.parse.outputs.success == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/tips.json
+          git commit -m "예측 추가/업데이트: ${{ github.event.issue.user.login }}"
+          git push
+
+      - name: Comment on success
+        if: steps.parse.outputs.success == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ 예측 ${{ steps.parse.outputs.count }}건이 저장되었습니다! 잠시 후 사이트의 "랭킹" 탭에서 확인할 수 있습니다.`
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
+
+      - name: Comment on failure
+        if: steps.parse.outputs.success == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `❌ 예측 저장에 실패했습니다: ${{ steps.parse.outputs.message }}\n\n사이트의 "내 예측" 탭에서 다시 시도해주세요.`
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
