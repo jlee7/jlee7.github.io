@@ -1,0 +1,1980 @@
+{
+  "matches": [
+    {
+      "id": 1,
+      "stage": "group",
+      "group": "A",
+      "date": "2026-06-11",
+      "time": "13:00",
+      "venue": "에스타디오 아스테카",
+      "city": "멕시코시티",
+      "home": {
+        "id": "MEX",
+        "name_ko": "멕시코"
+      },
+      "away": {
+        "id": "RSA",
+        "name_ko": "남아프리카공화국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 2,
+      "stage": "group",
+      "group": "A",
+      "date": "2026-06-11",
+      "time": "20:00",
+      "venue": "에스타디오 아크론",
+      "city": "과달라하라",
+      "home": {
+        "id": "KOR",
+        "name_ko": "대한민국"
+      },
+      "away": {
+        "id": "CZE",
+        "name_ko": "체코"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 3,
+      "stage": "group",
+      "group": "B",
+      "date": "2026-06-12",
+      "time": "15:00",
+      "venue": "BMO 필드",
+      "city": "토론토",
+      "home": {
+        "id": "CAN",
+        "name_ko": "캐나다"
+      },
+      "away": {
+        "id": "BIH",
+        "name_ko": "보스니아 헤르체고비나"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 4,
+      "stage": "group",
+      "group": "D",
+      "date": "2026-06-12",
+      "time": "18:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": "USA",
+        "name_ko": "미국"
+      },
+      "away": {
+        "id": "PAR",
+        "name_ko": "파라과이"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 5,
+      "stage": "group",
+      "group": "B",
+      "date": "2026-06-13",
+      "time": "12:00",
+      "venue": "리바이스 스타디움",
+      "city": "샌프란시스코 베이 에어리어",
+      "home": {
+        "id": "QAT",
+        "name_ko": "카타르"
+      },
+      "away": {
+        "id": "SUI",
+        "name_ko": "스위스"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 6,
+      "stage": "group",
+      "group": "C",
+      "date": "2026-06-13",
+      "time": "18:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": "BRA",
+        "name_ko": "브라질"
+      },
+      "away": {
+        "id": "MAR",
+        "name_ko": "모로코"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 7,
+      "stage": "group",
+      "group": "C",
+      "date": "2026-06-13",
+      "time": "21:00",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": "HAI",
+        "name_ko": "아이티"
+      },
+      "away": {
+        "id": "SCO",
+        "name_ko": "스코틀랜드"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 8,
+      "stage": "group",
+      "group": "D",
+      "date": "2026-06-13",
+      "time": "21:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": "AUS",
+        "name_ko": "호주"
+      },
+      "away": {
+        "id": "TUR",
+        "name_ko": "튀르키예"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 9,
+      "stage": "group",
+      "group": "E",
+      "date": "2026-06-14",
+      "time": "13:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": "GER",
+        "name_ko": "독일"
+      },
+      "away": {
+        "id": "CUW",
+        "name_ko": "퀴라소"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 10,
+      "stage": "group",
+      "group": "F",
+      "date": "2026-06-14",
+      "time": "16:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": "NED",
+        "name_ko": "네덜란드"
+      },
+      "away": {
+        "id": "JPN",
+        "name_ko": "일본"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 11,
+      "stage": "group",
+      "group": "E",
+      "date": "2026-06-14",
+      "time": "19:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": "CIV",
+        "name_ko": "코트디부아르"
+      },
+      "away": {
+        "id": "ECU",
+        "name_ko": "에콰도르"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 12,
+      "stage": "group",
+      "group": "F",
+      "date": "2026-06-14",
+      "time": "21:00",
+      "venue": "에스타디오 BBVA",
+      "city": "몬테레이",
+      "home": {
+        "id": "SWE",
+        "name_ko": "스웨덴"
+      },
+      "away": {
+        "id": "TUN",
+        "name_ko": "튀니지"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 13,
+      "stage": "group",
+      "group": "H",
+      "date": "2026-06-15",
+      "time": "12:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": "ESP",
+        "name_ko": "스페인"
+      },
+      "away": {
+        "id": "CPV",
+        "name_ko": "카보베르데"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 14,
+      "stage": "group",
+      "group": "G",
+      "date": "2026-06-15",
+      "time": "15:00",
+      "venue": "루멘 필드",
+      "city": "시애틀",
+      "home": {
+        "id": "BEL",
+        "name_ko": "벨기에"
+      },
+      "away": {
+        "id": "EGY",
+        "name_ko": "이집트"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 15,
+      "stage": "group",
+      "group": "H",
+      "date": "2026-06-15",
+      "time": "18:00",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": "KSA",
+        "name_ko": "사우디아라비아"
+      },
+      "away": {
+        "id": "URU",
+        "name_ko": "우루과이"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 16,
+      "stage": "group",
+      "group": "G",
+      "date": "2026-06-15",
+      "time": "21:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": "IRN",
+        "name_ko": "이란"
+      },
+      "away": {
+        "id": "NZL",
+        "name_ko": "뉴질랜드"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 17,
+      "stage": "group",
+      "group": "I",
+      "date": "2026-06-16",
+      "time": "15:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": "FRA",
+        "name_ko": "프랑스"
+      },
+      "away": {
+        "id": "SEN",
+        "name_ko": "세네갈"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 18,
+      "stage": "group",
+      "group": "I",
+      "date": "2026-06-16",
+      "time": "18:00",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": "IRQ",
+        "name_ko": "이라크"
+      },
+      "away": {
+        "id": "NOR",
+        "name_ko": "노르웨이"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 19,
+      "stage": "group",
+      "group": "J",
+      "date": "2026-06-16",
+      "time": "20:00",
+      "venue": "애로우헤드 스타디움",
+      "city": "캔자스시티",
+      "home": {
+        "id": "ARG",
+        "name_ko": "아르헨티나"
+      },
+      "away": {
+        "id": "ALG",
+        "name_ko": "알제리"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 20,
+      "stage": "group",
+      "group": "J",
+      "date": "2026-06-16",
+      "time": "21:00",
+      "venue": "리바이스 스타디움",
+      "city": "샌프란시스코 베이 에어리어",
+      "home": {
+        "id": "AUT",
+        "name_ko": "오스트리아"
+      },
+      "away": {
+        "id": "JOR",
+        "name_ko": "요르단"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 21,
+      "stage": "group",
+      "group": "K",
+      "date": "2026-06-17",
+      "time": "12:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": "POR",
+        "name_ko": "포르투갈"
+      },
+      "away": {
+        "id": "COD",
+        "name_ko": "콩고민주공화국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 22,
+      "stage": "group",
+      "group": "L",
+      "date": "2026-06-17",
+      "time": "15:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": "ENG",
+        "name_ko": "잉글랜드"
+      },
+      "away": {
+        "id": "CRO",
+        "name_ko": "크로아티아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 23,
+      "stage": "group",
+      "group": "L",
+      "date": "2026-06-17",
+      "time": "19:00",
+      "venue": "BMO 필드",
+      "city": "토론토",
+      "home": {
+        "id": "GHA",
+        "name_ko": "가나"
+      },
+      "away": {
+        "id": "PAN",
+        "name_ko": "파나마"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 24,
+      "stage": "group",
+      "group": "K",
+      "date": "2026-06-17",
+      "time": "20:00",
+      "venue": "에스타디오 아스테카",
+      "city": "멕시코시티",
+      "home": {
+        "id": "UZB",
+        "name_ko": "우즈베키스탄"
+      },
+      "away": {
+        "id": "COL",
+        "name_ko": "콜롬비아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 25,
+      "stage": "group",
+      "group": "A",
+      "date": "2026-06-18",
+      "time": "12:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": "CZE",
+        "name_ko": "체코"
+      },
+      "away": {
+        "id": "RSA",
+        "name_ko": "남아프리카공화국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 26,
+      "stage": "group",
+      "group": "B",
+      "date": "2026-06-18",
+      "time": "12:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": "SUI",
+        "name_ko": "스위스"
+      },
+      "away": {
+        "id": "BIH",
+        "name_ko": "보스니아 헤르체고비나"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 27,
+      "stage": "group",
+      "group": "B",
+      "date": "2026-06-18",
+      "time": "15:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": "CAN",
+        "name_ko": "캐나다"
+      },
+      "away": {
+        "id": "QAT",
+        "name_ko": "카타르"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 28,
+      "stage": "group",
+      "group": "A",
+      "date": "2026-06-18",
+      "time": "21:00",
+      "venue": "에스타디오 아크론",
+      "city": "과달라하라",
+      "home": {
+        "id": "MEX",
+        "name_ko": "멕시코"
+      },
+      "away": {
+        "id": "KOR",
+        "name_ko": "대한민국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 29,
+      "stage": "group",
+      "group": "D",
+      "date": "2026-06-19",
+      "time": "12:00",
+      "venue": "루멘 필드",
+      "city": "시애틀",
+      "home": {
+        "id": "USA",
+        "name_ko": "미국"
+      },
+      "away": {
+        "id": "AUS",
+        "name_ko": "호주"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 30,
+      "stage": "group",
+      "group": "C",
+      "date": "2026-06-19",
+      "time": "18:00",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": "SCO",
+        "name_ko": "스코틀랜드"
+      },
+      "away": {
+        "id": "MAR",
+        "name_ko": "모로코"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 31,
+      "stage": "group",
+      "group": "C",
+      "date": "2026-06-19",
+      "time": "21:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": "BRA",
+        "name_ko": "브라질"
+      },
+      "away": {
+        "id": "HAI",
+        "name_ko": "아이티"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 32,
+      "stage": "group",
+      "group": "D",
+      "date": "2026-06-19",
+      "time": "21:00",
+      "venue": "리바이스 스타디움",
+      "city": "샌프란시스코 베이 에어리어",
+      "home": {
+        "id": "TUR",
+        "name_ko": "튀르키예"
+      },
+      "away": {
+        "id": "PAR",
+        "name_ko": "파라과이"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 33,
+      "stage": "group",
+      "group": "F",
+      "date": "2026-06-20",
+      "time": "12:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": "NED",
+        "name_ko": "네덜란드"
+      },
+      "away": {
+        "id": "SWE",
+        "name_ko": "스웨덴"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 34,
+      "stage": "group",
+      "group": "E",
+      "date": "2026-06-20",
+      "time": "16:00",
+      "venue": "BMO 필드",
+      "city": "토론토",
+      "home": {
+        "id": "GER",
+        "name_ko": "독일"
+      },
+      "away": {
+        "id": "CIV",
+        "name_ko": "코트디부아르"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 35,
+      "stage": "group",
+      "group": "E",
+      "date": "2026-06-20",
+      "time": "19:00",
+      "venue": "애로우헤드 스타디움",
+      "city": "캔자스시티",
+      "home": {
+        "id": "ECU",
+        "name_ko": "에콰도르"
+      },
+      "away": {
+        "id": "CUW",
+        "name_ko": "퀴라소"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 36,
+      "stage": "group",
+      "group": "F",
+      "date": "2026-06-20",
+      "time": "21:00",
+      "venue": "에스타디오 BBVA",
+      "city": "몬테레이",
+      "home": {
+        "id": "TUN",
+        "name_ko": "튀니지"
+      },
+      "away": {
+        "id": "JPN",
+        "name_ko": "일본"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 37,
+      "stage": "group",
+      "group": "H",
+      "date": "2026-06-21",
+      "time": "12:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": "ESP",
+        "name_ko": "스페인"
+      },
+      "away": {
+        "id": "KSA",
+        "name_ko": "사우디아라비아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 38,
+      "stage": "group",
+      "group": "G",
+      "date": "2026-06-21",
+      "time": "12:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": "BEL",
+        "name_ko": "벨기에"
+      },
+      "away": {
+        "id": "IRN",
+        "name_ko": "이란"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 39,
+      "stage": "group",
+      "group": "H",
+      "date": "2026-06-21",
+      "time": "18:00",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": "URU",
+        "name_ko": "우루과이"
+      },
+      "away": {
+        "id": "CPV",
+        "name_ko": "카보베르데"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 40,
+      "stage": "group",
+      "group": "G",
+      "date": "2026-06-21",
+      "time": "18:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": "NZL",
+        "name_ko": "뉴질랜드"
+      },
+      "away": {
+        "id": "EGY",
+        "name_ko": "이집트"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 41,
+      "stage": "group",
+      "group": "J",
+      "date": "2026-06-22",
+      "time": "12:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": "ARG",
+        "name_ko": "아르헨티나"
+      },
+      "away": {
+        "id": "AUT",
+        "name_ko": "오스트리아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 42,
+      "stage": "group",
+      "group": "I",
+      "date": "2026-06-22",
+      "time": "17:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": "FRA",
+        "name_ko": "프랑스"
+      },
+      "away": {
+        "id": "IRQ",
+        "name_ko": "이라크"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 43,
+      "stage": "group",
+      "group": "I",
+      "date": "2026-06-22",
+      "time": "20:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": "NOR",
+        "name_ko": "노르웨이"
+      },
+      "away": {
+        "id": "SEN",
+        "name_ko": "세네갈"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 44,
+      "stage": "group",
+      "group": "J",
+      "date": "2026-06-22",
+      "time": "20:00",
+      "venue": "리바이스 스타디움",
+      "city": "샌프란시스코 베이 에어리어",
+      "home": {
+        "id": "JOR",
+        "name_ko": "요르단"
+      },
+      "away": {
+        "id": "ALG",
+        "name_ko": "알제리"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 45,
+      "stage": "group",
+      "group": "K",
+      "date": "2026-06-23",
+      "time": "12:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": "POR",
+        "name_ko": "포르투갈"
+      },
+      "away": {
+        "id": "UZB",
+        "name_ko": "우즈베키스탄"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 46,
+      "stage": "group",
+      "group": "L",
+      "date": "2026-06-23",
+      "time": "16:00",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": "ENG",
+        "name_ko": "잉글랜드"
+      },
+      "away": {
+        "id": "GHA",
+        "name_ko": "가나"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 47,
+      "stage": "group",
+      "group": "L",
+      "date": "2026-06-23",
+      "time": "19:00",
+      "venue": "BMO 필드",
+      "city": "토론토",
+      "home": {
+        "id": "PAN",
+        "name_ko": "파나마"
+      },
+      "away": {
+        "id": "CRO",
+        "name_ko": "크로아티아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 48,
+      "stage": "group",
+      "group": "K",
+      "date": "2026-06-23",
+      "time": "20:00",
+      "venue": "에스타디오 아크론",
+      "city": "과달라하라",
+      "home": {
+        "id": "COL",
+        "name_ko": "콜롬비아"
+      },
+      "away": {
+        "id": "COD",
+        "name_ko": "콩고민주공화국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 49,
+      "stage": "group",
+      "group": "B",
+      "date": "2026-06-24",
+      "time": "12:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": "SUI",
+        "name_ko": "스위스"
+      },
+      "away": {
+        "id": "CAN",
+        "name_ko": "캐나다"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 50,
+      "stage": "group",
+      "group": "B",
+      "date": "2026-06-24",
+      "time": "15:00",
+      "venue": "루멘 필드",
+      "city": "시애틀",
+      "home": {
+        "id": "BIH",
+        "name_ko": "보스니아 헤르체고비나"
+      },
+      "away": {
+        "id": "QAT",
+        "name_ko": "카타르"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 51,
+      "stage": "group",
+      "group": "C",
+      "date": "2026-06-24",
+      "time": "18:00",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": "SCO",
+        "name_ko": "스코틀랜드"
+      },
+      "away": {
+        "id": "BRA",
+        "name_ko": "브라질"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 52,
+      "stage": "group",
+      "group": "C",
+      "date": "2026-06-24",
+      "time": "18:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": "MAR",
+        "name_ko": "모로코"
+      },
+      "away": {
+        "id": "HAI",
+        "name_ko": "아이티"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 53,
+      "stage": "group",
+      "group": "A",
+      "date": "2026-06-24",
+      "time": "21:00",
+      "venue": "에스타디오 아스테카",
+      "city": "멕시코시티",
+      "home": {
+        "id": "CZE",
+        "name_ko": "체코"
+      },
+      "away": {
+        "id": "MEX",
+        "name_ko": "멕시코"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 54,
+      "stage": "group",
+      "group": "A",
+      "date": "2026-06-24",
+      "time": "21:00",
+      "venue": "에스타디오 BBVA",
+      "city": "몬테레이",
+      "home": {
+        "id": "RSA",
+        "name_ko": "남아프리카공화국"
+      },
+      "away": {
+        "id": "KOR",
+        "name_ko": "대한민국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 55,
+      "stage": "group",
+      "group": "E",
+      "date": "2026-06-25",
+      "time": "16:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": "ECU",
+        "name_ko": "에콰도르"
+      },
+      "away": {
+        "id": "GER",
+        "name_ko": "독일"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 56,
+      "stage": "group",
+      "group": "E",
+      "date": "2026-06-25",
+      "time": "16:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": "CUW",
+        "name_ko": "퀴라소"
+      },
+      "away": {
+        "id": "CIV",
+        "name_ko": "코트디부아르"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 57,
+      "stage": "group",
+      "group": "F",
+      "date": "2026-06-25",
+      "time": "19:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": "JPN",
+        "name_ko": "일본"
+      },
+      "away": {
+        "id": "SWE",
+        "name_ko": "스웨덴"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 58,
+      "stage": "group",
+      "group": "F",
+      "date": "2026-06-25",
+      "time": "19:00",
+      "venue": "애로우헤드 스타디움",
+      "city": "캔자스시티",
+      "home": {
+        "id": "TUN",
+        "name_ko": "튀니지"
+      },
+      "away": {
+        "id": "NED",
+        "name_ko": "네덜란드"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 59,
+      "stage": "group",
+      "group": "D",
+      "date": "2026-06-25",
+      "time": "19:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": "TUR",
+        "name_ko": "튀르키예"
+      },
+      "away": {
+        "id": "USA",
+        "name_ko": "미국"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 60,
+      "stage": "group",
+      "group": "D",
+      "date": "2026-06-25",
+      "time": "19:00",
+      "venue": "리바이스 스타디움",
+      "city": "샌프란시스코 베이 에어리어",
+      "home": {
+        "id": "PAR",
+        "name_ko": "파라과이"
+      },
+      "away": {
+        "id": "AUS",
+        "name_ko": "호주"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 61,
+      "stage": "group",
+      "group": "I",
+      "date": "2026-06-26",
+      "time": "15:00",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": "NOR",
+        "name_ko": "노르웨이"
+      },
+      "away": {
+        "id": "FRA",
+        "name_ko": "프랑스"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 62,
+      "stage": "group",
+      "group": "I",
+      "date": "2026-06-26",
+      "time": "15:00",
+      "venue": "BMO 필드",
+      "city": "토론토",
+      "home": {
+        "id": "SEN",
+        "name_ko": "세네갈"
+      },
+      "away": {
+        "id": "IRQ",
+        "name_ko": "이라크"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 63,
+      "stage": "group",
+      "group": "H",
+      "date": "2026-06-26",
+      "time": "20:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": "CPV",
+        "name_ko": "카보베르데"
+      },
+      "away": {
+        "id": "KSA",
+        "name_ko": "사우디아라비아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 64,
+      "stage": "group",
+      "group": "H",
+      "date": "2026-06-26",
+      "time": "20:00",
+      "venue": "에스타디오 아크론",
+      "city": "과달라하라",
+      "home": {
+        "id": "URU",
+        "name_ko": "우루과이"
+      },
+      "away": {
+        "id": "ESP",
+        "name_ko": "스페인"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 65,
+      "stage": "group",
+      "group": "G",
+      "date": "2026-06-26",
+      "time": "20:00",
+      "venue": "루멘 필드",
+      "city": "시애틀",
+      "home": {
+        "id": "EGY",
+        "name_ko": "이집트"
+      },
+      "away": {
+        "id": "IRN",
+        "name_ko": "이란"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 66,
+      "stage": "group",
+      "group": "G",
+      "date": "2026-06-26",
+      "time": "20:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": "NZL",
+        "name_ko": "뉴질랜드"
+      },
+      "away": {
+        "id": "BEL",
+        "name_ko": "벨기에"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 67,
+      "stage": "group",
+      "group": "L",
+      "date": "2026-06-27",
+      "time": "17:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": "PAN",
+        "name_ko": "파나마"
+      },
+      "away": {
+        "id": "ENG",
+        "name_ko": "잉글랜드"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 68,
+      "stage": "group",
+      "group": "L",
+      "date": "2026-06-27",
+      "time": "17:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": "CRO",
+        "name_ko": "크로아티아"
+      },
+      "away": {
+        "id": "GHA",
+        "name_ko": "가나"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 69,
+      "stage": "group",
+      "group": "K",
+      "date": "2026-06-27",
+      "time": "19:30",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": "COL",
+        "name_ko": "콜롬비아"
+      },
+      "away": {
+        "id": "POR",
+        "name_ko": "포르투갈"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 70,
+      "stage": "group",
+      "group": "K",
+      "date": "2026-06-27",
+      "time": "19:30",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": "COD",
+        "name_ko": "콩고민주공화국"
+      },
+      "away": {
+        "id": "UZB",
+        "name_ko": "우즈베키스탄"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 71,
+      "stage": "group",
+      "group": "J",
+      "date": "2026-06-27",
+      "time": "20:00",
+      "venue": "애로우헤드 스타디움",
+      "city": "캔자스시티",
+      "home": {
+        "id": "ALG",
+        "name_ko": "알제리"
+      },
+      "away": {
+        "id": "AUT",
+        "name_ko": "오스트리아"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 72,
+      "stage": "group",
+      "group": "J",
+      "date": "2026-06-27",
+      "time": "20:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": "JOR",
+        "name_ko": "요르단"
+      },
+      "away": {
+        "id": "ARG",
+        "name_ko": "아르헨티나"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 73,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-28",
+      "time": "15:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": null,
+        "name_ko": "A조 2위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "B조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 74,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-28",
+      "time": "18:00",
+      "venue": "에스타디오 BBVA",
+      "city": "몬테레이",
+      "home": {
+        "id": null,
+        "name_ko": "E조 2위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "I조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 75,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-29",
+      "time": "13:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": null,
+        "name_ko": "C조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "F조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 76,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-29",
+      "time": "16:30",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": null,
+        "name_ko": "E조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 A/B/C/D/F 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 77,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-29",
+      "time": "21:00",
+      "venue": "에스타디오 BBVA",
+      "city": "몬테레이",
+      "home": {
+        "id": null,
+        "name_ko": "F조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "C조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 78,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-30",
+      "time": "13:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": null,
+        "name_ko": "E조 2위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "I조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 79,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-30",
+      "time": "17:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": null,
+        "name_ko": "I조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 C/D/F/G/H 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 80,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-06-30",
+      "time": "21:00",
+      "venue": "에스타디오 아스테카",
+      "city": "멕시코시티",
+      "home": {
+        "id": null,
+        "name_ko": "A조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 C/E/F/H/I 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 81,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-01",
+      "time": "12:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": null,
+        "name_ko": "L조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 E/H/I/J/K 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 82,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-01",
+      "time": "15:00",
+      "venue": "루멘 필드",
+      "city": "시애틀",
+      "home": {
+        "id": null,
+        "name_ko": "D조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 B/E/F/G/I 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 83,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-01",
+      "time": "18:00",
+      "venue": "리바이스 스타디움",
+      "city": "샌프란시스코 베이 에어리어",
+      "home": {
+        "id": null,
+        "name_ko": "G조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 A/C/E/H/I 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 84,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-02",
+      "time": "13:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": null,
+        "name_ko": "D조 2위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "G조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 85,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-02",
+      "time": "16:00",
+      "venue": "애로우헤드 스타디움",
+      "city": "캔자스시티",
+      "home": {
+        "id": null,
+        "name_ko": "B조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 D/E/I/J/L 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 86,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-02",
+      "time": "19:00",
+      "venue": "BMO 필드",
+      "city": "토론토",
+      "home": {
+        "id": null,
+        "name_ko": "H조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "J조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 87,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-03",
+      "time": "13:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": null,
+        "name_ko": "K조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "3위 그룹 D/E/I/J/L 중 1팀"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 88,
+      "stage": "ro32",
+      "group": null,
+      "date": "2026-07-03",
+      "time": "17:00",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": null,
+        "name_ko": "J조 1위"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "H조 2위"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 89,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-04",
+      "time": "13:00",
+      "venue": "NRG 스타디움",
+      "city": "휴스턴",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M75 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M76 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 90,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-04",
+      "time": "17:00",
+      "venue": "링컨 파이낸셜 필드",
+      "city": "필라델피아",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M87 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M88 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 91,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-05",
+      "time": "16:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M73 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M74 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 92,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-05",
+      "time": "20:00",
+      "venue": "에스타디오 아스테카",
+      "city": "멕시코시티",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M79 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M80 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 93,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-06",
+      "time": "15:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M77 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M78 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 94,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-06",
+      "time": "20:00",
+      "venue": "루멘 필드",
+      "city": "시애틀",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M81 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M82 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 95,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-07",
+      "time": "12:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M85 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M86 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 96,
+      "stage": "ro16",
+      "group": null,
+      "date": "2026-07-07",
+      "time": "16:00",
+      "venue": "BC플레이스",
+      "city": "밴쿠버",
+      "home": {
+        "id": null,
+        "name_ko": "32강 M83 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "32강 M84 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 97,
+      "stage": "qf",
+      "group": null,
+      "date": "2026-07-09",
+      "time": "16:00",
+      "venue": "질레트 스타디움",
+      "city": "보스턴",
+      "home": {
+        "id": null,
+        "name_ko": "16강 M89 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "16강 M90 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 98,
+      "stage": "qf",
+      "group": null,
+      "date": "2026-07-10",
+      "time": "15:00",
+      "venue": "소파이 스타디움",
+      "city": "로스앤젤레스",
+      "home": {
+        "id": null,
+        "name_ko": "16강 M93 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "16강 M94 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 99,
+      "stage": "qf",
+      "group": null,
+      "date": "2026-07-10",
+      "time": "17:00",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": null,
+        "name_ko": "16강 M91 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "16강 M92 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 100,
+      "stage": "qf",
+      "group": null,
+      "date": "2026-07-11",
+      "time": "16:00",
+      "venue": "애로우헤드 스타디움",
+      "city": "캔자스시티",
+      "home": {
+        "id": null,
+        "name_ko": "16강 M95 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "16강 M96 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 101,
+      "stage": "sf",
+      "group": null,
+      "date": "2026-07-14",
+      "time": "20:00",
+      "venue": "AT&T 스타디움",
+      "city": "댈러스",
+      "home": {
+        "id": null,
+        "name_ko": "8강 M97 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "8강 M98 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 102,
+      "stage": "sf",
+      "group": null,
+      "date": "2026-07-15",
+      "time": "20:00",
+      "venue": "메르세데스-벤츠 스타디움",
+      "city": "애틀랜타",
+      "home": {
+        "id": null,
+        "name_ko": "8강 M99 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "8강 M100 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 103,
+      "stage": "third",
+      "group": null,
+      "date": "2026-07-18",
+      "time": "15:00",
+      "venue": "하드록 스타디움",
+      "city": "마이애미",
+      "home": {
+        "id": null,
+        "name_ko": "준결승 M101 패자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "준결승 M102 패자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": 104,
+      "stage": "final",
+      "group": null,
+      "date": "2026-07-19",
+      "time": "15:00",
+      "venue": "메트라이프 스타디움",
+      "city": "뉴욕/뉴저지",
+      "home": {
+        "id": null,
+        "name_ko": "준결승 M101 승자"
+      },
+      "away": {
+        "id": null,
+        "name_ko": "준결승 M102 승자"
+      },
+      "homeScore": null,
+      "awayScore": null
+    }
+  ]
+}

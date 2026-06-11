@@ -1,0 +1,27 @@
+name: "🔮 월드컵 예측 제출"
+description: "웹사이트의 '내 예측' 탭에서 자동으로 생성되는 양식입니다. 직접 작성하지 않아도 됩니다."
+title: "[TIP] "
+labels: ["tip-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        이 이슈는 사이트의 **내 예측 → GitHub에 제출** 버튼을 통해 자동으로 채워집니다.
+        아래 내용을 확인한 뒤 **Submit new issue** 버튼을 눌러주세요.
+        제출 후 자동화 작업이 예측 데이터를 `data/tips.json` 파일에 저장하고 이 이슈는 자동으로 닫힙니다.
+  - type: input
+    id: nickname
+    attributes:
+      label: 닉네임
+      description: 예측 순위표에 표시될 닉네임입니다.
+      placeholder: 홍길동
+    validations:
+      required: true
+  - type: textarea
+    id: predictions
+    attributes:
+      label: 예측 데이터 (수정하지 마세요)
+      description: JSON 형식의 경기 예측 데이터입니다. 자동으로 생성되므로 직접 수정하지 마세요.
+      render: json
+    validations:
+      required: true
